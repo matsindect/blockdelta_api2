@@ -9,27 +9,29 @@ module Api
         
         # Method to create a new user using the safe params we setup.
         def create
-            user = User.new(user_params)
-            if user.save
+          @users = User.new(user_params)
+            if @users.save
+                # Tell the UserMailer to send a welcome email after save
+                UserMailer.welcome_email(@users).deliver_now
                 response = { message: 'User created successfully'}
                 render json: response, status: :created 
             else
-                render json: @user.errors, status: :bad
+                render json: @users.errors, status: :bad
             end
         end
       
       # Method to update a specific user. User will need to be authorized.
       def update
-        user = User.find(params[:id])
-        if user.update(user_params)
+        @users = User.find(params[:id])
+        if @users.update(user_params)
           render json: { status: 200, msg: 'User details have been updated.' }
         end
       end
       
       # Method to delete a user, this method is only for admin accounts.
       def destroy
-        user = User.find(params[:id])
-        if user.destroy
+        @users = User.find(params[:id])
+        if @users.destroy
           render json: { status: 200, msg: 'User has been deleted.' }
         end
       end

@@ -10,6 +10,9 @@ Rails.application.routes.draw do
         patch  '/user/:id'       => 'users#update'
         delete '/user/:id'       => 'users#destroy'
 
+        post 'password/forgot', to: 'passwords#forgot'
+        post 'password/reset', to: 'passwords#reset'
+
       #blogs resource
         get    '/blogs'          => 'blogs#index'
         post   '/blog/post'      => 'blogs#create'
@@ -44,6 +47,7 @@ Rails.application.routes.draw do
         patch  '/blogger/:id'       => 'bloggers#update'
         delete '/blogger/:id'       => 'bloggers#destroy'
         
+
         resources :bloggers do
           member do
             get ':profile_pic', :controller => "bloggers", :action => "profile_pic"

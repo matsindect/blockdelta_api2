@@ -25,7 +25,7 @@ development:
   <<: *default
   database: blockdelta_api_development
   username: delta_admin
-  password: <%= ENV['BLOCKDELTA_API_DATABASE_PASSWORD'] %>
+  password: UbKZ.&5RL0Ax
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
   # When left blank, postgres will use the default role. This is

@@ -1,8 +1,9 @@
 module Api
     module V1        
         class JobsController < ApplicationController
-            before_action :authenticate_user,  only: [ :index, :update, :current]
-            before_action :authorize_as_blogger, only: [:create,:destroy, :current]
+            skip_before_action :authenticate_request, only: [:index, :current ]
+            before_action :authenticate_user,  only: [:update]
+            before_action :authorize_as_blogger, only: [:create,:destroy]
             before_action :authorize,          only: [:update, :current]
             
         

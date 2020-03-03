@@ -70,7 +70,9 @@ Rails.application.configure do
   config.log_formatter = ::Logger::Formatter.new
 
   # Configure default URL for action mailer
+  config.hosts << "dev.blockdelta.com"
   config.action_mailer.default_url_options = {:host =>'localhost:3000'}
+
   # Use a different logger for distributed setups.
   # require 'syslog/logger'
   # config.logger = ActiveSupport::TaggedLogging.new(Syslog::Logger.new 'app-name')

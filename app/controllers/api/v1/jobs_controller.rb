@@ -3,8 +3,8 @@ module Api
         class JobsController < ApplicationController
             skip_before_action :authenticate_request, only: [:index, :current ]
             before_action :authenticate_user,  only: [:update]
-            before_action :authorize_as_blogger, only: [:create,:destroy]
-            before_action :authorize,          only: [:update, :current]
+            before_action :authorize_as_admin, only: [:create,:destroy]
+            before_action :authorize,          only: [:update]
             
         
             # Should work if the current_user is authenticated.

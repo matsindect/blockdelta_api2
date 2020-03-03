@@ -69,7 +69,7 @@ module Api
       end
       # Setting up strict parameters for when we add account creation.
       def user_params
-        params.require(:user).permit(:username, :email, :password, :password_confirmation, :role)
+        params.permit(:username, :email, :password, :password_confirmation, :role)
       end
       
       # Adding a method to check if current_user can update itself. 

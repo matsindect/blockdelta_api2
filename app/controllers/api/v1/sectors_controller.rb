@@ -46,7 +46,7 @@ module Api
         
             # Setting up strict parameters for when we add account creation.
             def sector_params
-                params.require(:sector).permit(:name, :slug, :description)
+                params.permit(:name, :slug, :description)
             end
             # Adding a method to check if current_user can update itself. 
             # This uses our blogger method.

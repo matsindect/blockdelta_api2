@@ -51,7 +51,7 @@ module Api
         
             # Setting up strict parameters for when we add account creation.
             def candidate_params
-                params.require(:candidate).permit(:first_name, :surname, :profile_pic, :phone).merge(user_id: current_user.id)
+                params.permit(:first_name, :surname, :profile_pic, :phone).merge(user_id: current_user.id)
             end
             # Adding a method to check if current_user can update itself. 
             # This uses our blogger method.

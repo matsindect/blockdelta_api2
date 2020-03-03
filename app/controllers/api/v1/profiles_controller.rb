@@ -46,7 +46,7 @@ module Api
         
             # Setting up strict parameters for when we add account creation.
             def blogger_params
-                params.require(:profile).permit(:name, :slug)
+                params.permit(:name, :slug)
             end
             # Adding a method to check if current_user can update itself. 
             # This uses our blogger method.

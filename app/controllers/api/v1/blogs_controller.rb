@@ -51,7 +51,7 @@ module Api
             private
             # Setting up strict parameters for when we add account creation.
             def blog_params
-                params.permit(:title, :description, :sector_id, :category_id).merge(user_id: current_user.id)
+                params.permit(:title, :description, :slug, :sector_id, :category_id, :featured_image).merge(user_id: current_user.id)
             end
             # Adding a method to check if current_user can update itself. 
             # This uses our blogger method.

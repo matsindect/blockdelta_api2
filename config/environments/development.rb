@@ -41,6 +41,8 @@ Rails.application.configure do
 
   # Highlight code that triggered database queries in logs.
   config.active_record.verbose_query_logs = true
+
+  config.hosts << "blockdelta.com"
   config.hosts << "dev.blockdelta.com"
   config.hosts << /application\.local\Z/
 # Configure default URL for action mailer

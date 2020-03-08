@@ -9,7 +9,7 @@ Rails.application.configure do
   # and those relying on copy on write to perform better.
   # Rake tasks automatically ignore this option for performance.
   config.eager_load = true
-  
+
   config.action_dispatch.tld_length = 2 # Defaults to 1
   # Full error reports are disabled and caching is turned on.
   config.consider_all_requests_local       = false
@@ -71,6 +71,7 @@ Rails.application.configure do
   config.log_formatter = ::Logger::Formatter.new
 
   # Configure default URL for action mailer
+  config.hosts << "blockdelta.com"
   config.hosts << "dev.blockdelta.com"
   config.hosts << /application\.local\Z/
   config.action_mailer.default_url_options = {:host =>'localhost:3000'}

@@ -1,5 +1,4 @@
-module Api
-    module V1
+module Api::V1
         class BloggersController < ApplicationController
             before_action :authenticate_user,  only: [ :index, :update, :current]
             before_action :authorize_as_blogger, only: [:create,:destroy, :current]
@@ -58,5 +57,4 @@ module Api
                 render json: { error: 'You are not authorized to modify this data'} , status: 401 unless current_user && current_user.can_modify_blog?(params[:id])
             end
         end
-    end
 end

@@ -1,5 +1,4 @@
-module Api
-    module V1
+module Api::V1
         class BlogsController < ApplicationController
             skip_before_action :authenticate_request, only: [:index, :current]
             before_action :authenticate_user,  only: [ :update]
@@ -11,6 +10,8 @@ module Api
             def index
                 @blogs = Blog.all.order("created_at DESC")
                 render :json => @blogs.to_json(:methods => [ :featured_image])
+            rescue ActiveRecord::RecordNotFound
+                render json: {}, status: :not_found
             end
 
              # Method to create a new @blog using the safe params we setup.
@@ -60,5 +61,4 @@ module Api
                 render json: { error: 'You are not authorized to modify this data'} , status: 401 unless current_user && current_user.can_modify_blog?(params[:id])
             end
         end
-    end
 end

@@ -1,5 +1,4 @@
-module Api
-    module V1
+module Api::V1
         class SectorsController < ApplicationController
             skip_before_action :authenticate_request, only: [:index, :current]
             before_action :authenticate_user,  only: [:update,]
@@ -55,5 +54,4 @@ module Api
                 render json: { error: 'You are not authorized to modify this data'} , status: 401 unless current_user && current_user.can_modify_user?(params[:id])
             end
         end
-    end
 end

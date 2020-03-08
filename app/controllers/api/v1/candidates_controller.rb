@@ -1,5 +1,4 @@
-module Api
-    module V1
+module Api::V1
         class CandidatesController < ApplicationController
             before_action :authenticate_user,  only: [ :index, :update, :current]
             before_action :authorize_as_candidate, only: [:create,:destroy, :current]
@@ -59,5 +58,4 @@ module Api
                 render json: { error: 'You are not authorized to modify this data'} , status: 401 unless current_user && current_user.can_modify_candidate?(params[:id])
             end
         end
-    end
 end

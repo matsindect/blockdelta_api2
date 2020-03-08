@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
-  namespace :api do
-    namespace :v1 do
+  constraints subdomain: 'api' do
+    scope module: 'api' do
+      namespace :v1 do
 
       #Users resource
         post   '/users/signup'   => 'users#create'
@@ -68,7 +69,7 @@ Rails.application.routes.draw do
             get ':featured_image', :controller => "events", :action => "featured_image"
           end
         end
-        
+      end
       
     end
   end

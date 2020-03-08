@@ -44,6 +44,7 @@ module Api
                 end
             end
 
+            
             def featured_image
                 @blog = Blog.find(params[:id])
                 send_file @blog.featured_image.path, :type => @blog.featured_image_content_type

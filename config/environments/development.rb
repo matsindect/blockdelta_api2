@@ -11,7 +11,7 @@ Rails.application.configure do
 
   # Show full error reports.
   config.consider_all_requests_local = true
-
+  config.action_dispatch.tld_length = 1 # Defaults to 1
   config.web_console.whitelisted_ips = %w( 0.0.0.0 )
   # Enable/disable caching. By default caching is disabled.
   # Run rails dev:cache to toggle caching.
@@ -45,12 +45,13 @@ Rails.application.configure do
 
   config.hosts << "blockdelta.com"
   config.hosts << "dev.blockdelta.com"
+  config.hosts << "api.blockdelta.local"
   config.hosts << /application\.local\Z/
 # Configure default URL for action mailer
   config.action_mailer.default_url_options = {:host =>'localhost:3000'}
   # Raises error for missing translations.
   # config.action_view.raise_on_missing_translations = true
-  config.action_dispatch.tld_length = 2 # Defaults to 1
+  
   # Use an evented file watcher to asynchronously detect changes in source code,
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker

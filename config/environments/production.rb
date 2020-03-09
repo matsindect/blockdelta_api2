@@ -72,6 +72,7 @@ Rails.application.configure do
   # Configure default URL for action mailer
   config.hosts << "blockdelta.com"
   config.hosts << "dev.blockdelta.com"
+  config.hosts << "api.blockdelta.local"
   config.hosts << /application\.local\Z/
   config.action_mailer.default_url_options = {:host =>'localhost:3000'}
 

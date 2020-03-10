@@ -1,5 +1,10 @@
 class Blog < ApplicationRecord
+    include Filterable
+    scope :filter_by_category_id, -> (category_id) { where category_id: category_id }
+    scope :filter_by_sector_id, -> (sector_id) { where sector_id: sector_id }
+    scope :filter_by_title, -> (title) { where("title like ?", "#{title}%")}
     after_save :set_published_at
+    after_validation :set_slug, only: [:create, :update]
     belongs_to :user
     belongs_to :sector
     belongs_to :category
@@ -21,11 +26,7 @@ class Blog < ApplicationRecord
     self.published_at = DateTime.now if self.published
     end
 
-    # def to_slug(title)
-    #     title.strip.downcase.gsub(/[\s\.\/\\]/, '-').gsub(/[^\w-]/, '').gsub(/[-_]{2,}/, '-').gsub(/^[-_]/, '').gsub(/[-_]$/, '')
-    # end
-
-    # def set_slug
-    #     self.update_attribute(:slug, to_slug(self.title))
-    # end
+    def set_slug
+        self.slug = title.to_s.parameterize
+    end 
 end

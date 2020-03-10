@@ -16,7 +16,7 @@ Rails.application.routes.draw do
       #blogs resource
         get    '/blogs'          => 'blogs#index'
         post   '/blog/post'      => 'blogs#create'
-        get    '/blog/current'   => 'blogs#current'
+        get    '/blog/:id'       => 'blogs#current'
         patch  '/blog/:id'       => 'blogs#update'
         delete '/blog/:id'       => 'blogs#destroy'
 
@@ -47,7 +47,10 @@ Rails.application.routes.draw do
         patch  '/blogger/:id'       => 'bloggers#update'
         delete '/blogger/:id'       => 'bloggers#destroy'
         
-
+      #Error route
+        get '/404', to: 'errors#not_found'
+        get '/500', to: 'errors#internal_server_error'
+    
         resources :bloggers do
           member do
             get ':profile_pic', :controller => "bloggers", :action => "profile_pic"

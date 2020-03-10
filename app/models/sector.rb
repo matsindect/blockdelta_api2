@@ -1,4 +1,5 @@
   class Sector < ApplicationRecord
+      after_validation :set_slug, only: [:create, :update]
       has_many :blogs
       has_many :events
       # before_update :set_slug
@@ -7,11 +8,7 @@
       def is_admin?
         role == 'admin'
       end
-      # def to_slug(name)
-      #   name.strip.downcase.gsub(/[\s\.\/\\]/, '-').gsub(/[^\w-]/, '').gsub(/[-_]{2,}/, '-').gsub(/^[-_]/, '').gsub(/[-_]$/, '')
-      # end
-
-      # def set_slug
-      #     self.update_attribute(:slug, to_slug(self.name))
-      # end
+      def set_slug
+        self.slug = name.to_s.parameterize
+      end 
   end

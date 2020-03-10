@@ -8,13 +8,13 @@ module Api::V1
         
             # Should work if the current_user is authenticated.
             def index
-                @event = Event.all.order("created_at DESC")
+                @event = Event.filter(params.slice(:event_title, :event_start_date, :event_end_date))
                 render :json => @event.to_json(:methods => [ :featured_image])
             end
 
              # Method to create a new @blog using the safe params we setup.
             def create
-                @blog = Event.create(blog_params)
+                @blog = Event.create(event_params)
                 if @event.save
                     response = { message: 'blog created successfully'}
                     render json: response, status: :created 
@@ -30,7 +30,7 @@ module Api::V1
             # Method to update a specific @blog. @blog will need to be authorized.
             def update
                 @event = Event.find(params[:id])
-                if @event.update(blog_params)
+                if @event.update(event_params)
                 render json: { status: 200, msg: 'blog details have been updated.' }
                 end
             end
@@ -48,9 +48,12 @@ module Api::V1
                 send_file @event.featured_image.path, :type => @event.featured_image_content_type
             end
             private
+            # def filtering_params(params)
+            #     params.slice(:event_title, :event_start_date, :event_end_date)
+            # end
             # Setting up strict parameters for when we add account creation.
-            def blog_params
-                params.permit(:title, :description, :featured_image, :sector_id, :category_id).merge(user_id: current_user.id)
+            def event_params
+                params.permit(:event_title, :event_start_date,:event_end_date, :event_venue, :event_description, :website, :featured_image, :sector_id, :category_id).merge(user_id: current_user.id)
             end
             # Adding a method to check if current_user can update itself. 
             # This uses our blogger method.

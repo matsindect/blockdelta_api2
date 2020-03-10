@@ -8,7 +8,7 @@ module Api::V1
         
             # Should work if the current_user is authenticated.
             def index
-                @blogs = Blog.all.order("created_at DESC")
+                @blogs = Blog.filter(params.slice(:sector_id, :category_id, :title))
                 render :json => @blogs.to_json(:methods => [ :featured_image])
             rescue ActiveRecord::RecordNotFound
                 render json: {}, status: :not_found
@@ -51,6 +51,9 @@ module Api::V1
                 send_file @blog.featured_image.path, :type => @blog.featured_image_content_type
             end
             private
+            # def filtering_params(params)
+            #     params.slice(:sector_id, :category_id, :title)
+            # end
             # Setting up strict parameters for when we add account creation.
             def blog_params
                 params.permit(:title, :description, :slug, :sector_id, :category_id, :featured_image).merge(user_id: current_user.id)

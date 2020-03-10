@@ -1,4 +1,5 @@
 class Job < ApplicationRecord
+    after_validation :set_slug, only: [:create, :update]
     belongs_to :sector
     belongs_to :category
     # before_update :set_slug
@@ -8,11 +9,7 @@ class Job < ApplicationRecord
         role == 'admin'
     end
 
-    # def to_slug(title)
-    #     title.strip.downcase.gsub(/[\s\.\/\\]/, '-').gsub(/[^\w-]/, '').gsub(/[-_]{2,}/, '-').gsub(/^[-_]/, '').gsub(/[-_]$/, '')
-    # end
-
-    # def set_slug
-    #     self.update_attribute(:slug, to_slug(self.title))
-    # end
+    def set_slug
+        self.slug = job_title.to_s.parameterize
+    end 
 end

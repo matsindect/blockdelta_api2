@@ -8,6 +8,7 @@ module Api::V1
         
         # Method to create a new user using the safe params we setup.
         def create
+          
           @users = User.new(user_params)
             if @users.save
                 # Tell the UserMailer to send a welcome email after save
@@ -15,7 +16,7 @@ module Api::V1
                 response = { message: 'User created successfully'}
                 render json: response, status: :created 
             else
-                render json: @users.errors, status: :bad
+                raise ExceptionHandler::RecordNotUnique
             end
         end
       
@@ -45,13 +46,18 @@ module Api::V1
       # If the user is logged-in we will return the user's information.
       def current
         current_user.update!(last_login: Time.now)
-        render json: current_user
+        render json: current_user, status: :ok
       end
       
       def login
         authenticate params[:email], params[:password]
       end
 
+      def show
+        @user = User.find_by!(id: params[:id])
+        raise Error::NotVisibleError unless @user.is_visible?
+        render json: @user, status: :ok
+      end
       private
       
       def authenticate(email, password)
@@ -61,7 +67,7 @@ module Api::V1
           render json: {
             access_token: command.result,
             message: 'Login Successful'
-          }
+          }, status: :created
         else
           render json: { error: command.errors }, status: :unauthorized
         end

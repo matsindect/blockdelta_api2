@@ -8,8 +8,8 @@ module Api::V1
         
             # Should work if the current_user is authenticated.
             def index
-                @job = Job.all.order("created_at DESC")
-                render json: @categories
+                @job = Job.filter(params.slice(:sector_id, :category_id, :job_title))
+                render json: @job
             end
 
              # Method to create a new @blog using the safe params we setup.
@@ -46,7 +46,7 @@ module Api::V1
         
             # Setting up strict parameters for when we add account creation.
             def category_params
-                params.permit(:job_title, :job_location, :job_deadline, :job_role, :job_salary, :job_description, :sector_id, :category_id)
+                params.permit(:job_title, :job_location, :job_deadline, :job_role, :job_salary, :job_description, :sector_id, :category_id).merge(user_id: current_user.id)
             end
             # Adding a method to check if current_user can update itself. 
             # This uses our blogger method.

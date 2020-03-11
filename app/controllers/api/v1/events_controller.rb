@@ -8,13 +8,15 @@ module Api::V1
         
             # Should work if the current_user is authenticated.
             def index
-                @event = Event.filter(params.slice(:event_title, :event_start_date, :event_end_date))
+                @event = Event.filter(params.slice(:event_title))
                 render :json => @event.to_json(:methods => [ :featured_image])
+            rescue ActiveRecord::RecordNotFound
+                render json: {}, status: :not_found
             end
 
              # Method to create a new @blog using the safe params we setup.
             def create
-                @blog = Event.create(event_params)
+                @event = Event.create(event_params)
                 if @event.save
                     response = { message: 'blog created successfully'}
                     render json: response, status: :created 
@@ -53,7 +55,7 @@ module Api::V1
             # end
             # Setting up strict parameters for when we add account creation.
             def event_params
-                params.permit(:event_title, :event_start_date,:event_end_date, :event_venue, :event_description, :website, :featured_image, :sector_id, :category_id).merge(user_id: current_user.id)
+                params.permit(:event_title, :event_start_date,:event_end_date, :event_venue, :event_description, :slug, :website, :featured_image, :sector_id, :category_id).merge(user_id: current_user.id)
             end
             # Adding a method to check if current_user can update itself. 
             # This uses our blogger method.

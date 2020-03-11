@@ -46,6 +46,20 @@ Rails.application.routes.draw do
         get    '/blogger/:id'       => 'bloggers#current'
         patch  '/blogger/:id'       => 'bloggers#update'
         delete '/blogger/:id'       => 'bloggers#destroy'
+
+        #events resource
+        get    '/events'           => 'events#index'
+        post   '/event/post'      => 'events#create'
+        get    '/event/:id'       => 'events#current'
+        patch  '/event/:id'       => 'events#update'
+        delete '/event/:id'       => 'events#destroy'
+
+        #jobs resource
+        get    '/jobs'           => 'jobs#index'
+        post   '/job/post'      => 'jobs#create'
+        get    '/job/:id'       => 'jobs#current'
+        patch  '/job/:id'       => 'jobs#update'
+        delete '/job/:id'       => 'jobs#destroy'
         
       #Error route
         get '/404', to: 'errors#not_found'

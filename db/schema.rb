@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_27_051310) do
+ActiveRecord::Schema.define(version: 2020_03_11_194947) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -93,6 +93,7 @@ ActiveRecord::Schema.define(version: 2020_02_27_051310) do
     t.string "featured_image_content_type"
     t.integer "featured_image_file_size"
     t.datetime "featured_image_updated_at"
+    t.string "slug"
     t.index ["category_id"], name: "index_events_on_category_id"
     t.index ["sector_id"], name: "index_events_on_sector_id"
     t.index ["user_id"], name: "index_events_on_user_id"
@@ -109,8 +110,11 @@ ActiveRecord::Schema.define(version: 2020_02_27_051310) do
     t.bigint "category_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "user_id", null: false
+    t.string "slug"
     t.index ["category_id"], name: "index_jobs_on_category_id"
     t.index ["sector_id"], name: "index_jobs_on_sector_id"
+    t.index ["user_id"], name: "index_jobs_on_user_id"
   end
 
   create_table "profiles", force: :cascade do |t|
@@ -142,4 +146,5 @@ ActiveRecord::Schema.define(version: 2020_02_27_051310) do
     t.index ["email"], name: "index_users_on_email"
   end
 
+  add_foreign_key "jobs", "users"
 end

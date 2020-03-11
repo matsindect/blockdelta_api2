@@ -1,8 +1,8 @@
 class Event < ApplicationRecord
     include Filterable
-    scope :filter_by_title, -> (event_title) { where("event_title like ?", "#{event_title}%")}
-    scope :filter_by_event_start_date, -> (event_start_date) { where("event_start_date >= ?", "#{event_start_date)}%" }
-    scope :filter_by_event_start_date, -> (event_end_date) { where("event_start_date >= ?", "#{event_end_date)}%" }
+    scope :filter_by_event_title, -> (event_title) { where("event_title like ?", "#{event_title}%")}
+    # scope :filter_by_event_start_date, -> (event_start_date) { where("event_start_date >= ?", "#{event_start_date}%") }
+    # scope :filter_by_event_end_date, -> (event_end_date) { where("event_end_date <= ?", "#{event_end_date}%") }
     after_validation :set_slug, only: [:create, :update]
     belongs_to :user
     has_attached_file :featured_image, 

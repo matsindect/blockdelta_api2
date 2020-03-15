@@ -1,4 +1,6 @@
   class Sector < ApplicationRecord
+      include Filterable
+      scope :filter_by_sector_id, -> (sector_id) { where sector_id: sector_id }
       after_validation :set_slug, only: [:create, :update]
       has_many :blogs
       has_many :events

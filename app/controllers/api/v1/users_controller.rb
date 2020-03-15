@@ -19,8 +19,11 @@ module Api::V1
                 raise ExceptionHandler::RecordNotUnique
             end
         end
-      
-      # Method to update a specific user. User will need to be authorized.
+        def blogs
+          @user = User.find(params[:id])
+          @blogs = @user.blogs
+        end
+        # Method to update a specific user. User will need to be authorized.
       def update
         @users = User.find(params[:id])
         if @users.update(user_params)

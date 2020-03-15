@@ -18,9 +18,7 @@ class Blog < ApplicationRecord
     # before_update :set_slug
     # before_create :set_slug
     # This method gives us a simple call to check if a user has permission to modify.
-    def can_modify_blog?(user_id)
-        role == 'admin' || (role == 'blogger' && id.to_s == user_id.to_s)
-    end
+    
 
     def set_published_at 
     self.published_at = DateTime.now if self.published

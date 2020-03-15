@@ -1,4 +1,6 @@
 class Category < ApplicationRecord
+    include Filterable
+    scope :filter_by_category_id, -> (category_id) { where category_id: category_id }
     after_validation :set_slug, only: [:create, :update]
     has_many :events
     has_many :blogs

@@ -9,6 +9,7 @@ Rails.application.routes.draw do
         get    '/users/current'  => 'users#current'
         patch  '/user/:id'       => 'users#update'
         delete '/user/:id'       => 'users#destroy'
+        get    '/user/:id/blogs' => 'users#blogs'
 
         post 'password/forgot', to: 'passwords#forgot'
         post 'password/reset', to: 'passwords#reset'

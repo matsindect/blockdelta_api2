@@ -9,6 +9,9 @@ module Api::V1
             # Should work if the current_user is authenticated.
             def index
                 @blogs = Blog.filter(params.slice(:sector_id, :category_id, :title))
+                # @blogs.each do |blog|
+                #     @category = Category.find(blog.category_id)
+                # end
                 render :json => @blogs.to_json(:methods => [ :featured_image])
             rescue ActiveRecord::RecordNotFound
                 render json: {}, status: :not_found
@@ -50,6 +53,9 @@ module Api::V1
                 @blog = Blog.find(params[:id])
                 send_file @blog.featured_image.path, :type => @blog.featured_image_content_type
             end
+            def find_categories(category_id)
+                @category = Category.find(category_id)
+              end
             private
             # def filtering_params(params)
             #     params.slice(:sector_id, :category_id, :title)

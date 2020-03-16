@@ -1,6 +1,6 @@
 module Api::V1
         class CandidatesController < ApplicationController
-            before_action :authenticate_user,  only: [ :index, :update, :current]
+            before_action :authenticate_user,  only: [ :index, :update, :current, :profile_pic]
             before_action :authorize_as_candidate, only: [:create,:destroy, :current]
             before_action :authorize,          only: [:update, :current]
             

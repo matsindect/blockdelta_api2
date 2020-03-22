@@ -68,7 +68,7 @@ module Api::V1
 
         if command.success?
           render json: {
-            access_token: command.result,
+            user: command.result,
             message: 'Login Successful'
           }, status: :created
         else

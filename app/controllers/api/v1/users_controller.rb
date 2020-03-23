@@ -21,7 +21,18 @@ module Api::V1
         end
         def blogs
           @user = User.find(params[:id])
-          @blogs = @user.blogs
+          @blogs = @user.blog
+          
+        end
+
+        def candidates
+          @user = User.find(params[:id])
+          @candidate = @user.candidates
+        end
+
+        def bloggers
+          @user = User.find(params[:id])
+          @blogger = @user.bloggers
         end
         # Method to update a specific user. User will need to be authorized.
       def update

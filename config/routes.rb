@@ -10,6 +10,8 @@ Rails.application.routes.draw do
         patch  '/user/:id'       => 'users#update'
         delete '/user/:id'       => 'users#destroy'
         get    '/user/:id/blogs' => 'users#blogs'
+        get    '/user/:id/blogger' => 'users#bloggers'
+        get    '/user/:id/candidate' => 'users#candidates'
 
         post 'password/forgot', to: 'passwords#forgot'
         post 'password/reset', to: 'passwords#reset'
@@ -34,6 +36,13 @@ Rails.application.routes.draw do
         get    '/profile/:id'       => 'profiles#current'
         patch  '/profile/:id'       => 'profiles#update'
         delete '/profile/:id'       => 'profiles#destroy'
+
+      #category resource
+      get    '/candidates'          => 'candidates#index'
+      post   '/candidate/post'      => 'candidates#create'
+      get    '/candidate/current'   => 'candidates#current'
+      patch  '/candidate/:id'       => 'candidates#update'
+      delete '/candidate/:id'       => 'candidates#destroy'
         
       #category resource
         get    '/sectors'          => 'sectors#index'

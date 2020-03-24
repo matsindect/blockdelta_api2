@@ -7,7 +7,7 @@ module Api::V1
         
             # Should work if the current_user is authenticated.
             def index
-                @blogger = Blogger.all.order("created_at DESC")
+                @blogger = Blogger.filter(params.slice(:user_id))
                 render :json => @blogger.to_json(:methods => [ :profile_pic])
             end
             

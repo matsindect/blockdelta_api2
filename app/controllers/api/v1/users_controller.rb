@@ -1,7 +1,7 @@
 module Api::V1
     class UsersController < ApplicationController
 
-        skip_before_action :authenticate_request, only: [:login, :create]
+        skip_before_action :authenticate_request, only: [:login, :create, :user_blogs]
         before_action :authenticate_user,  only: [:current, :update]
         before_action :authorize_as_admin, only: [ :index,:destroy]
         before_action :authorize,          only: [:update]
@@ -19,10 +19,11 @@ module Api::V1
                 raise ExceptionHandler::RecordNotUnique
             end
         end
-        def blogs
+
+        def user_blogs
           @user = User.find(params[:id])
-          @blogs = @user.blog
-          
+          @blogs = @user.blogs
+
         end
 
         def candidates

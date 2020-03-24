@@ -1,4 +1,6 @@
 class Blogger < ApplicationRecord
+    include Filterable
+    scope :filter_by_user_id, -> (user_id) { where user_id: user_id }
     belongs_to :user
     belongs_to :profile
     has_many :blogs, dependent: :destroy
@@ -11,6 +13,10 @@ class Blogger < ApplicationRecord
     validates_attachment :profile_pic, presence: true
     do_not_validate_attachment_file_type :profile_pic
 
+    
+    def set_slug
+        self.slug = job_title.to_s.parameterize
+    end 
     def can_modify_blogger?(user_id)
         role == 'admin' || role == 'blogger' &&  id.to_s == user_id.to_s
     end

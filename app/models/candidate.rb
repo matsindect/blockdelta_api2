@@ -1,4 +1,6 @@
 class Candidate < ApplicationRecord
+    include Filterable
+    scope :filter_by_user_id, -> (user_id) { where user_id: user_id }
     belongs_to :user
     has_attached_file :profile_pic,
                     :styles => { :thumb => "75x75>", :small => "150x150>" },

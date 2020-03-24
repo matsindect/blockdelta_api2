@@ -1,5 +1,6 @@
 class Blog < ApplicationRecord
     include Filterable
+    scope :filter_by_user_id, -> (user_id) { where user_id: user_id }
     scope :filter_by_category_id, -> (category_id) { where category_id: category_id }
     scope :filter_by_sector_id, -> (sector_id) { where sector_id: sector_id }
     scope :filter_by_title, -> (title) { where("title like ?", "#{title}%")}

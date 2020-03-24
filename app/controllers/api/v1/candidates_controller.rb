@@ -7,7 +7,7 @@ module Api::V1
         
             # Should work if the current_user is authenticated.
             def index
-                @candidate = Candidate.all.order("created_at DESC")
+                @candidate = Candidate.filter(params.slice(:user_id))
                 render :json => @candidate.to_json(:methods => [ :profile_pic])
             end
 

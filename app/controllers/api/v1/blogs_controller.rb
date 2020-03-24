@@ -8,15 +8,15 @@ module Api::V1
         
             # Should work if the current_user is authenticated.
             def index
-                @blogs = Blog.filter(params.slice(:sector_id, :category_id, :title))
-                # @blogs.each do |blog|
-                #     @category = Category.find(blog.category_id)
-                # end
+                @blogs = Blog.filter(params.slice(:sector_id, :category_id, :title, :user_id))
                 render :json => @blogs.to_json(:methods => [ :featured_image])
             rescue ActiveRecord::RecordNotFound
                 render json: {}, status: :not_found
             end
-
+            
+            def user_blogs
+                @blogs = Blog.where(:user_id => current_user.id)
+            end
              # Method to create a new @blog using the safe params we setup.
             def create
                 @blog = Blog.create(blog_params)

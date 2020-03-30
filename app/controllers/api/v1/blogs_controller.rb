@@ -25,7 +25,6 @@ module Api::V1
             def create
                 @blog = Blog.create(blog_params)
                 if @blog.save
-                    @blog.save_attachments(blog_params) if params[:file]
                     response = { message: 'blog created successfully'}
                     render json: response, status: :created 
                 else
@@ -71,7 +70,7 @@ module Api::V1
                 params.permit(:file => [])
             end
             def blog_params
-                params.permit(:title, :description, :slug, :sector_id, :category_id, :featured_image, :file =>[]).merge(user_id: current_user.id)
+                params.permit(:title, :description, :slug, :sector_id, :category_id, :featured_image).merge(user_id: current_user.id)
             end
             # Adding a method to check if current_user can update itself. 
             # This uses our blogger method.

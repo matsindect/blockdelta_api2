@@ -9,8 +9,8 @@ class Blog < ApplicationRecord
     belongs_to :user
     belongs_to :sector
     belongs_to :category
-    has_many :documents
-    attr_accessor :file
+    # has_many :documents
+    # # attr_accessor :file
     
     has_many :media, dependent: :destroy
     has_attached_file :featured_image,
@@ -25,11 +25,11 @@ class Blog < ApplicationRecord
     # This method gives us a simple call to check if a user has permission to modify.
     
 
-    def save_attachments(params)
-        params[:file].each do |image|
-          self.documents.create(:file => image)
-        end
-    end
+    # def save_attachments(params)
+    #     params[:file].each do |image|
+    #       self.documents.create(:file => image)
+    #     end
+    # end
 
     
     def set_published_at 

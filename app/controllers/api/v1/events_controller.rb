@@ -22,7 +22,6 @@ module Api::V1
             def create
                 @event = Event.create(event_params)
                 if @event.save
-                    @event.save_attachments(event_params) if params[:file]
                     response = { message: 'Event created successfully'}
                     render json: response, status: :created 
                 else
@@ -60,7 +59,7 @@ module Api::V1
             # end
             # Setting up strict parameters for when we add account creation.
             def event_params
-                params.permit(:event_title, :event_start_date,:event_end_date, :event_venue, :event_description, :slug, :website, :featured_image, :sector_id, :category_id, :file =>[]).merge(user_id: current_user.id)
+                params.permit(:event_title, :event_start_date,:event_end_date, :event_venue, :event_description, :slug, :website, :featured_image, :sector_id, :category_id).merge(user_id: current_user.id)
             end
             # Adding a method to check if current_user can update itself. 
             # This uses our blogger method.

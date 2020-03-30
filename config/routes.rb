@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :jobsmedia
+  resources :eventsmedia
+  resources :blogsmedia
   resources :items
     scope module: 'api' do
       namespace :v1 do
@@ -23,7 +26,8 @@ Rails.application.routes.draw do
         get    '/blog/:id'       => 'blogs#current'
         patch  '/blog/:id'       => 'blogs#update'
         delete '/blog/:id'       => 'blogs#destroy'
-        get    '/bogs/media'      => 'blogs#media'
+        get    '/blogs/media'      => 'blogsmedia#media'
+        post   '/blogs/media/post'    => 'blogsmedia#create'
 
       #category resource
         get    '/categories'         => 'categories#index'
@@ -65,7 +69,8 @@ Rails.application.routes.draw do
         get    '/event/:id'       => 'events#current'
         patch  '/event/:id'       => 'events#update'
         delete '/event/:id'       => 'events#destroy'
-        get    '/events/media'     => 'events#media'
+        get    '/events/media'      => 'eventsmedia#media'
+        post    '/events/media/post'      => 'eventsmedia#create'
 
       #jobs resource
         get    '/jobs'           => 'jobs#index'
@@ -73,7 +78,8 @@ Rails.application.routes.draw do
         get    '/job/:id'        => 'jobs#current'
         patch  '/job/:id'        => 'jobs#update'
         delete '/job/:id'        => 'jobs#destroy'
-        get    '/jobs/media'      => 'jobs#media'
+        get    '/jobs/media'     => 'jobsmedia#media'
+        post    '/jobs/media/post'  => 'jobsmedia#create'
         
       #Error route
           get '/404', to: 'errors#not_found'

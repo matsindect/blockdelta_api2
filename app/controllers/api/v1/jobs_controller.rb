@@ -21,7 +21,6 @@ module Api::V1
             def create
                 @job = Job.new(category_params)
                 if @job.save
-                    @job.save_attachments(category_params) if params[:file]
                     response = { message: 'Job created successfully'}
                     render json: response, status: :created 
                 else
@@ -52,7 +51,7 @@ module Api::V1
         
             # Setting up strict parameters for when we add account creation.
             def category_params
-                params.permit(:job_title, :job_location, :job_deadline, :job_role, :job_salary, :job_description, :sector_id, :category_id, :file =>[]).merge(user_id: current_user.id)
+                params.permit(:job_title, :job_location, :job_deadline, :job_role, :job_salary, :job_description, :sector_id, :category_id).merge(user_id: current_user.id)
             end
             # Adding a method to check if current_user can update itself. 
             # This uses our blogger method.

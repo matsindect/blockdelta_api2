@@ -12,11 +12,17 @@ module Api::V1
                 render json: @job
             end
 
+            def media
+                @items = Jobsmedium.filter(params.slice(:job_id))
+                render :json => @items.to_json(:methods => [:file])
+                # render json: @items
+            end
              # Method to create a new @blog using the safe params we setup.
             def create
                 @job = Job.new(category_params)
                 if @job.save
-                    response = { message: 'category created successfully'}
+                    @job.save_attachments(category_params) if params[:file]
+                    response = { message: 'Job created successfully'}
                     render json: response, status: :created 
                 else
                     render json: @job.errors, status: :bad
@@ -46,7 +52,7 @@ module Api::V1
         
             # Setting up strict parameters for when we add account creation.
             def category_params
-                params.permit(:job_title, :job_location, :job_deadline, :job_role, :job_salary, :job_description, :sector_id, :category_id).merge(user_id: current_user.id)
+                params.permit(:job_title, :job_location, :job_deadline, :job_role, :job_salary, :job_description, :sector_id, :category_id, :file =>[]).merge(user_id: current_user.id)
             end
             # Adding a method to check if current_user can update itself. 
             # This uses our blogger method.

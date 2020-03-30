@@ -1,0 +1,11 @@
+class Document < ApplicationRecord
+  
+  include Filterable
+  scope :filter_by_blog_id, -> (blog_id) { where blog_id: blog_id }
+  belongs_to :blog
+  has_attached_file :file,
+                    :styles => { :thumb => "75x75>", :small => "150x150>" },
+                    :path =>':rails_root/non-public/system/:class/:attachment/:id/:style/:basename.:extension',
+                    :url => '/:class/:id/:basename.:extension'
+  validates_attachment :file, presence: true, content_type: { content_type: "image/jpeg" }
+end

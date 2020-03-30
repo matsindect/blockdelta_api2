@@ -6,9 +6,18 @@ class Job < ApplicationRecord
     after_validation :set_slug, only: [:create, :update]
     belongs_to :sector
     belongs_to :category
+    has_many :jobsmedia
+    attr_accessor :file
+    # has_many :media, dependent: :destroy
     # before_update :set_slug
     # before_create :set_slug
      # This method tells us if the user is an admin or not.
+
+    def save_attachments(params)
+        params[:file].each do |image|
+          self.jobsmedia.create(:file => image)
+        end
+    end
     def is_admin?
         role == 'admin'
     end

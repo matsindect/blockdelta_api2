@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_11_194947) do
+ActiveRecord::Schema.define(version: 2020_03_30_091801) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -76,6 +76,17 @@ ActiveRecord::Schema.define(version: 2020_03_11_194947) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "documents", force: :cascade do |t|
+    t.bigint "blog_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "file_file_name"
+    t.string "file_content_type"
+    t.integer "file_file_size"
+    t.datetime "file_updated_at"
+    t.index ["blog_id"], name: "index_documents_on_blog_id"
+  end
+
   create_table "events", force: :cascade do |t|
     t.datetime "event_start_date"
     t.datetime "event_end_date"
@@ -99,6 +110,26 @@ ActiveRecord::Schema.define(version: 2020_03_11_194947) do
     t.index ["user_id"], name: "index_events_on_user_id"
   end
 
+  create_table "eventsmedia", force: :cascade do |t|
+    t.bigint "event_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "file_file_name"
+    t.string "file_content_type"
+    t.integer "file_file_size"
+    t.datetime "file_updated_at"
+    t.index ["event_id"], name: "index_eventsmedia_on_event_id"
+  end
+
+  create_table "imageuploads", force: :cascade do |t|
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "images_file_name"
+    t.string "images_content_type"
+    t.integer "images_file_size"
+    t.datetime "images_updated_at"
+  end
+
   create_table "jobs", force: :cascade do |t|
     t.string "job_title"
     t.string "job_location"
@@ -115,6 +146,26 @@ ActiveRecord::Schema.define(version: 2020_03_11_194947) do
     t.index ["category_id"], name: "index_jobs_on_category_id"
     t.index ["sector_id"], name: "index_jobs_on_sector_id"
     t.index ["user_id"], name: "index_jobs_on_user_id"
+  end
+
+  create_table "jobsmedia", force: :cascade do |t|
+    t.bigint "job_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "file_file_name"
+    t.string "file_content_type"
+    t.integer "file_file_size"
+    t.datetime "file_updated_at"
+    t.index ["job_id"], name: "index_jobsmedia_on_job_id"
+  end
+
+  create_table "media", force: :cascade do |t|
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "images_file_name"
+    t.string "images_content_type"
+    t.integer "images_file_size"
+    t.datetime "images_updated_at"
   end
 
   create_table "profiles", force: :cascade do |t|
@@ -146,5 +197,8 @@ ActiveRecord::Schema.define(version: 2020_03_11_194947) do
     t.index ["email"], name: "index_users_on_email"
   end
 
+  add_foreign_key "documents", "blogs"
+  add_foreign_key "eventsmedia", "events"
   add_foreign_key "jobs", "users"
+  add_foreign_key "jobsmedia", "jobs"
 end

@@ -13,14 +13,19 @@ module Api::V1
             rescue ActiveRecord::RecordNotFound
                 render json: {}, status: :not_found
             end
-            
-            def user_blogs
+            def media
+                @items = Document.filter(params.slice(:item_id))
+                render :json => @items.to_json(:methods => [:file])
+                # render json: @items
+            end
+            def blog_images
                 @blogs = Blog.where(:user_id => current_user.id)
             end
              # Method to create a new @blog using the safe params we setup.
             def create
                 @blog = Blog.create(blog_params)
                 if @blog.save
+                    @blog.save_attachments(blog_params) if params[:file]
                     response = { message: 'blog created successfully'}
                     render json: response, status: :created 
                 else
@@ -53,6 +58,7 @@ module Api::V1
                 @blog = Blog.find(params[:id])
                 send_file @blog.featured_image.path, :type => @blog.featured_image_content_type
             end
+
             def find_categories(category_id)
                 @category = Category.find(category_id)
               end
@@ -61,8 +67,11 @@ module Api::V1
             #     params.slice(:sector_id, :category_id, :title)
             # end
             # Setting up strict parameters for when we add account creation.
+            def media_params
+                params.permit(:file => [])
+            end
             def blog_params
-                params.permit(:title, :description, :slug, :sector_id, :category_id, :featured_image).merge(user_id: current_user.id)
+                params.permit(:title, :description, :slug, :sector_id, :category_id, :featured_image, :file =>[]).merge(user_id: current_user.id)
             end
             # Adding a method to check if current_user can update itself. 
             # This uses our blogger method.

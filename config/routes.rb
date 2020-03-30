@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :items
     scope module: 'api' do
       namespace :v1 do
 
@@ -22,6 +23,7 @@ Rails.application.routes.draw do
         get    '/blog/:id'       => 'blogs#current'
         patch  '/blog/:id'       => 'blogs#update'
         delete '/blog/:id'       => 'blogs#destroy'
+        get    '/bogs/media'      => 'blogs#media'
 
       #category resource
         get    '/categories'         => 'categories#index'
@@ -38,12 +40,12 @@ Rails.application.routes.draw do
         delete '/profile/:id'       => 'profiles#destroy'
 
       #category resource
-      get    '/candidates'          => 'candidates#index'
-      post   '/candidate/post'      => 'candidates#create'
-      get    '/candidate/current'   => 'candidates#current'
-      patch  '/candidate/:id'       => 'candidates#update'
-      delete '/candidate/:id'       => 'candidates#destroy'
-        
+        get    '/candidates'          => 'candidates#index'
+        post   '/candidate/post'      => 'candidates#create'
+        get    '/candidate/current'   => 'candidates#current'
+        patch  '/candidate/:id'       => 'candidates#update'
+        delete '/candidate/:id'       => 'candidates#destroy'
+          
       #category resource
         get    '/sectors'          => 'sectors#index'
         post   '/sector/post'      => 'sectors#create'
@@ -51,30 +53,32 @@ Rails.application.routes.draw do
         patch  '/sector/:id'       => 'sectors#update'
         delete '/sector/:id'       => 'sectors#destroy'
       #category resource
-        get    '/bloggers'           => 'bloggers#index'
+        get    '/bloggers'          => 'bloggers#index'
         post   '/blogger/post'      => 'bloggers#create'
         get    '/blogger/:id'       => 'bloggers#current'
         patch  '/blogger/:id'       => 'bloggers#update'
         delete '/blogger/:id'       => 'bloggers#destroy'
 
-        #events resource
-        get    '/events'           => 'events#index'
+      #events resource
+        get    '/events'          => 'events#index'
         post   '/event/post'      => 'events#create'
         get    '/event/:id'       => 'events#current'
         patch  '/event/:id'       => 'events#update'
         delete '/event/:id'       => 'events#destroy'
+        get    '/events/media'     => 'events#media'
 
-        #jobs resource
+      #jobs resource
         get    '/jobs'           => 'jobs#index'
-        post   '/job/post'      => 'jobs#create'
-        get    '/job/:id'       => 'jobs#current'
-        patch  '/job/:id'       => 'jobs#update'
-        delete '/job/:id'       => 'jobs#destroy'
+        post   '/job/post'       => 'jobs#create'
+        get    '/job/:id'        => 'jobs#current'
+        patch  '/job/:id'        => 'jobs#update'
+        delete '/job/:id'        => 'jobs#destroy'
+        get    '/jobs/media'      => 'jobs#media'
         
       #Error route
-        get '/404', to: 'errors#not_found'
-        get '/500', to: 'errors#internal_server_error'
-    
+          get '/404', to: 'errors#not_found'
+          get '/500', to: 'errors#internal_server_error'
+      
         resources :bloggers do
           member do
             get ':profile_pic', :controller => "bloggers", :action => "profile_pic"

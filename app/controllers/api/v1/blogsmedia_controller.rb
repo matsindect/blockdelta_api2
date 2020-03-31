@@ -1,6 +1,6 @@
 module Api::V1
   class BlogsmediaController < ApplicationController
-    skip_before_action :authenticate_request, only: [:index, :create, :media ]
+    skip_before_action :authenticate_request, only: [:file, :index, :create, :media ]
     before_action :set_blogsmedium, only: [:show, :update, :destroy]
 
     # GET /blogsmedia

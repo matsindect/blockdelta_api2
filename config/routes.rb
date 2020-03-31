@@ -105,6 +105,22 @@ Rails.application.routes.draw do
             get ':featured_image', :controller => "events", :action => "featured_image"
           end
         end
+        resources :jobsmediauploads do
+          member do
+            get ':file', :controller => "jobsmedia", :action => "file"
+          end
+        end
+        resources :blogsmediauploads do
+          member do
+            get ':file', :controller => "blogsmedia", :action => "file"
+          end
+        end
+        resources :eventsmediauploads do
+          member do
+            get ':file', :controller => "eventsmedia", :action => "file"
+          end
+        end
+        
       end
       
   end

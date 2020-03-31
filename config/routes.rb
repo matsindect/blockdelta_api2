@@ -26,8 +26,8 @@ Rails.application.routes.draw do
         get    '/blog/:id'       => 'blogs#current'
         patch  '/blog/:id'       => 'blogs#update'
         delete '/blog/:id'       => 'blogs#destroy'
-        get    '/blogs/media'      => 'blogsmedia#media'
-        post   '/blogs/media/post'    => 'blogsmedia#create'
+        get    '/blogs/media'    => 'blogsmedia#media'
+        post   '/blogs/media/post'  => 'blogsmedia#create'
 
       #category resource
         get    '/categories'         => 'categories#index'

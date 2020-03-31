@@ -1,5 +1,4 @@
 class Eventsmediaupload < ApplicationRecord
-  belongs_to :eventsmedium
   has_attached_file :file,
                     :styles => { :thumb => "75x75>", :small => "150x150>" },
                     :path =>':rails_root/non-public/system/:class/:attachment/:id/:style/:basename.:extension',

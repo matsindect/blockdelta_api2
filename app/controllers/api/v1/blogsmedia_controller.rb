@@ -27,8 +27,14 @@ module Api::V1
       @blogsmedium = Blogsmedium.new(blogsmedium_params)
 
       if @blogsmedium.save
-        @blogsmedium.save_attachments(blogsmedium_params) if params[:file]
-        response = { message: 'Blog media created successfully'}
+        if params[:file]
+          params[:file].each do |image|
+            @blogsmedium.blogsmediauploads.create(:file => image)
+            @items = Blogsmediaupload.find_by_blogsmedium_id(@blogsmedium.id)
+            @file = @items.file
+          end 
+        end
+        response = { message: 'Blog media created successfully', location: @file}
         render json: response, status: :created 
       else
         render json: @blogsmedium.errors, status: :unprocessable_entity

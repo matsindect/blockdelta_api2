@@ -2,7 +2,6 @@ class Blogger < ApplicationRecord
     include Filterable
     scope :filter_by_user_id, -> (user_id) { where user_id: user_id }
     belongs_to :user
-    belongs_to :profile
     has_many :blogs, dependent: :destroy
     has_many :events, dependent: :destroy
     has_attached_file :profile_pic, 

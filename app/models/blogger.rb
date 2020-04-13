@@ -12,6 +12,14 @@ class Blogger < ApplicationRecord
                     :url => '/:class/:id/:basename.:extension' 
     validates_attachment :profile_pic, presence: true
     do_not_validate_attachment_file_type :profile_pic
+    # background picture
+    has_attached_file :background_pic, 
+                    :styles => { :thumb => "75x75>", :small => "1920x1080>" },
+                    :path => 
+                    ':rails_root/non-public/system/:class/:attachment/:id/:style/:basename.:extension',
+                    :url => '/:class/:id/:basename.:extension'
+    validates_attachment :background_pic, presence: true
+    do_not_validate_attachment_file_type :background_pic
 
     
     def set_slug

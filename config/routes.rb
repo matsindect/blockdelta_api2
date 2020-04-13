@@ -90,9 +90,24 @@ Rails.application.routes.draw do
             get ':profile_pic', :controller => "bloggers", :action => "profile_pic"
           end
         end
+        resources :bloggers do
+          member do
+            get ':background_pic', :controller => "bloggers", :action => "background_pic"
+          end
+        end
         resources :candidates do
           member do
             get ':profile_pic', :controller => "candidates", :action => "profile_pic"
+          end
+        end
+        resources :candidates do
+          member do
+            get ':resume', :controller => "candidates", :action => "resume"
+          end
+        end
+        resources :candidates do
+          member do
+            get ':cover_letter', :controller => "candidates", :action => "cover_letter"
           end
         end
         resources :blogs do

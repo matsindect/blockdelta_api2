@@ -83,6 +83,6 @@ test:
 production:
   <<: *default
   database: blockdelta_api_production
-  username: blockdelta_api
+  # username: blockdelta_api
   username: delta_admin
   password: <%= ENV['BLOCKDELTA_API_DATABASE_PASSWORD'] %>

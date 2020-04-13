@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_30_134930) do
+ActiveRecord::Schema.define(version: 2020_04_13_051417) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -18,17 +18,26 @@ ActiveRecord::Schema.define(version: 2020_03_30_134930) do
   create_table "bloggers", force: :cascade do |t|
     t.string "first_name"
     t.string "surname"
-    t.string "profession"
-    t.string "phone"
     t.bigint "user_id"
-    t.bigint "profile_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "profile_pic_file_name"
     t.string "profile_pic_content_type"
     t.integer "profile_pic_file_size"
     t.datetime "profile_pic_updated_at"
-    t.index ["profile_id"], name: "index_bloggers_on_profile_id"
+    t.text "bio"
+    t.string "interests"
+    t.text "city"
+    t.text "twitter"
+    t.text "country"
+    t.text "linkedin"
+    t.text "facebook"
+    t.text "instagram"
+    t.text "medium_prof"
+    t.string "background_pic_file_name"
+    t.string "background_pic_content_type"
+    t.integer "background_pic_file_size"
+    t.datetime "background_pic_updated_at"
     t.index ["user_id"], name: "index_bloggers_on_user_id"
   end
 
@@ -80,6 +89,14 @@ ActiveRecord::Schema.define(version: 2020_03_30_134930) do
     t.string "profile_pic_content_type"
     t.integer "profile_pic_file_size"
     t.datetime "profile_pic_updated_at"
+    t.string "cover_letter_file_name"
+    t.string "cover_letter_content_type"
+    t.integer "cover_letter_file_size"
+    t.datetime "cover_letter_updated_at"
+    t.string "resume_file_name"
+    t.string "resume_content_type"
+    t.integer "resume_file_size"
+    t.datetime "resume_updated_at"
     t.index ["profile_id"], name: "index_candidates_on_profile_id"
     t.index ["user_id"], name: "index_candidates_on_user_id"
   end

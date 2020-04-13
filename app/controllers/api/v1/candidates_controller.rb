@@ -1,6 +1,6 @@
 module Api::V1
         class CandidatesController < ApplicationController
-            before_action :authenticate_user,  only: [ :index, :update, :current, :profile_pic]
+            before_action :authenticate_user,  only: [ :index, :update, :current, :profile_pic, :resume, :cover_letter]
             before_action :authorize_as_candidate, only: [:create,:destroy, :current]
             before_action :authorize,          only: [:update, :current]
             
@@ -8,7 +8,7 @@ module Api::V1
             # Should work if the current_user is authenticated.
             def index
                 @candidate = Candidate.filter(params.slice(:user_id))
-                render :json => @candidate.to_json(:methods => [ :profile_pic])
+                render :json => @candidate.to_json(:methods => [ :profile_pic, :resume, :cover_letter])
             end
 
              # Method to create a new @blog using the safe params we setup.
@@ -46,11 +46,16 @@ module Api::V1
                 @candidate = Candidate.find(params[:id])
                 send_file @candidate.profile_pic.path, :type => @candidate.profile_pic_content_type
             end
+
+            def resume
+                @candidate = Resume.find(params[:id])
+                send_file @candidate.resume.path, :type => @candidate.resume_content_type
+            end
             private
         
             # Setting up strict parameters for when we add account creation.
             def candidate_params
-                params.permit(:first_name, :surname, :profile_pic, :phone).merge(user_id: current_user.id)
+                params.permit(:first_name, :surname, :profile_pic, :phone, :resume, :cover_letter).merge(user_id: current_user.id)
             end
             # Adding a method to check if current_user can update itself. 
             # This uses our blogger method.

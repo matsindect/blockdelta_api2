@@ -2,7 +2,9 @@ module Api::V1
         class CandidatesController < ApplicationController
             before_action :authenticate_user,  only: [ :index, :update, :current, :profile_pic, :resume, :cover_letter]
             before_action :authorize_as_candidate, only: [:create,:destroy, :current]
-            before_action :authorize,          only: [:update, :current]
+            before_action :find_candidate, only: [:update, :destroy, :current, :authorize]
+            before_action :authorize,          only: [ :update, :current, :destroy]
+            
             
         
             # Should work if the current_user is authenticated.
@@ -23,12 +25,10 @@ module Api::V1
             end
             # Method to edit a specific @blog. @blog will need to be authorized.
             def current
-                @candidate = Candidate.find(params[:id])
                 render json: @candidate
             end
             # Method to update a specific @blog. @blog will need to be authorized.
             def update
-                @candidate = Candidate.find(params[:id])
                 if @candidate.update(candidate_params)
                 render json: { status: 200, msg: 'candidate details have been updated.' }
                 end
@@ -36,7 +36,6 @@ module Api::V1
 
             # Method to delete a @blog, this method is only for admin accounts.
             def destroy
-                @candidate = Candidate.find(params[:id])
                 if @candidate.destroy
                 render json: { status: 200, msg: 'candidate has been deleted.' }
                 end
@@ -46,11 +45,18 @@ module Api::V1
                 @candidate = Candidate.find(params[:id])
                 send_file @candidate.profile_pic.path, :type => @candidate.profile_pic_content_type
             end
-
+            def cover_letter
+                @candidate = Candidate.find(params[:id])
+                send_file @candidate.cover_letter.path, 
+                        :filename => @candidate.cover_letter,
+                        :type => "application/octet-stream", 
+                        :disposition => inline
+            end
             def resume
-                @candidate = Resume.find(params[:id])
+                @candidate = Candidate.find(params[:id])
                 send_file @candidate.resume.path, :type => @candidate.resume_content_type
             end
+            
             private
         
             # Setting up strict parameters for when we add account creation.
@@ -59,8 +65,12 @@ module Api::V1
             end
             # Adding a method to check if current_user can update itself. 
             # This uses our blogger method.
+            def find_candidate
+                @blogger = Blogger.find(params[:id])
+            end 
+
             def authorize
-                render json: { error: 'You are not authorized to modify this data'} , status: 401 unless current_user && current_user.can_modify_candidate?(params[:id])
+                render json: { error: 'You are not authorized to modify this data'} , status: 401 unless current_user && @candidate.user_id == current_user.id
             end
         end
 end

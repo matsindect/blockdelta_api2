@@ -15,12 +15,12 @@ class User < ApplicationRecord
       role == 'admin' || id.to_s == user_id.to_s
     end
 
-    def can_modify_event?(user1_id)
-      role == 'admin' || role == 'blogger' &&  user_id.to_s == user1_id.to_s
+    def can_modify_event?(user_id)
+      role == 'admin' || role == 'blogger' &&  id.to_s == user_id.to_s
     end
 
-    def can_modify_candidate?(user1_id)
-      role == 'admin' || role == 'candidate' &&  user_id.to_s == user1_id.to_s
+    def can_modify_candidate?(user_id)
+      role == 'admin' || role == 'candidate' &&  id.to_s == user_id.to_s
     end
     # This method tells us if the user is an admin or not.
     def is_admin?

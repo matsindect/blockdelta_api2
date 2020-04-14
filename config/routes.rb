@@ -46,7 +46,7 @@ Rails.application.routes.draw do
       #category resource
         get    '/candidates'          => 'candidates#index'
         post   '/candidate/post'      => 'candidates#create'
-        get    '/candidate/current'   => 'candidates#current'
+        get    '/candidate/:id'       => 'candidates#current'
         patch  '/candidate/:id'       => 'candidates#update'
         delete '/candidate/:id'       => 'candidates#destroy'
           
@@ -62,7 +62,7 @@ Rails.application.routes.draw do
         get    '/blogger/:id'       => 'bloggers#current'
         patch  '/blogger/:id'       => 'bloggers#update'
         delete '/blogger/:id'       => 'bloggers#destroy'
-
+        
       #events resource
         get    '/events'          => 'events#index'
         post   '/event/post'      => 'events#create'
@@ -87,29 +87,30 @@ Rails.application.routes.draw do
       
         resources :bloggers do
           member do
-            get ':profile_pic', :controller => "bloggers", :action => "profile_pic"
+            get '/profile_pics/:profile_pic', :controller => "bloggers", :action => "profile_pic"
           end
         end
         resources :bloggers do
           member do
-            get ':background_pic', :controller => "bloggers", :action => "background_pic"
+            get '/background_pics/:background_pic', :controller => "bloggers", :action => "background_pic"
           end
         end
         resources :candidates do
           member do
-            get ':profile_pic', :controller => "candidates", :action => "profile_pic"
+            get '/profile_pics/:profile_pic', :controller => "candidates", :action => "profile_pic"
           end
         end
         resources :candidates do
           member do
-            get ':resume', :controller => "candidates", :action => "resume"
+            get '/resumes/:resume', :controller => "candidates", :action => "resume"
           end
         end
         resources :candidates do
           member do
-            get ':cover_letter', :controller => "candidates", :action => "cover_letter"
+              get '/cover_letters/:cover_letter', :controller => "candidates", :action => "cover_letter"
           end
         end
+        
         resources :blogs do
           member do
             get ':featured_image', :controller => "blogs", :action => "featured_image"

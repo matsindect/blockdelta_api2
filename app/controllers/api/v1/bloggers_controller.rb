@@ -2,7 +2,8 @@ module Api::V1
         class BloggersController < ApplicationController
             before_action :authenticate_user,  only: [ :index, :update, :current, :profile_pic, :background_pic]
             before_action :authorize_as_blogger, only: [:create,:destroy, :current]
-            before_action :authorize,          only: [:update, :current]
+            before_action :find_blogger, only: [:update, :destroy, :current, :authorize]
+            before_action :authorize,          only: [ :update, :current, :destroy]
             
         
             # Should work if the current_user is authenticated.
@@ -23,20 +24,17 @@ module Api::V1
             end
             # Method to edit a specific @blog. @blog will need to be authorized.
             def current
-                @blogger = Blogger.find(params[:id])
                 render json: @blogger
             end
             # Method to update a specific @blog. @blog will need to be authorized.
             def update
-                @blogger = Blogger.find(params[:id])
-                if @blogger.update(blogger_params)
+                if @blogger.update(blogger_params) 
                 render json: { status: 200, msg: 'blog details have been updated.' }
                 end
             end
 
             # Method to delete a @blog, this method is only for admin accounts.
             def destroy
-                @blogger = Blogger.find(params[:id])
                 if @blogger.destroy
                 render json: { status: 200, msg: 'User has been deleted.' }
                 end
@@ -57,8 +55,12 @@ module Api::V1
             end
             # Adding a method to check if current_user can update itself. 
             # This uses our blogger method.
+            def find_blogger
+                @blogger = Blogger.find(params[:id])
+            end 
+
             def authorize
-                render json: { error: 'You are not authorized to modify this data'} , status: 401 unless current_user && current_user.can_modify_blog?(params[:id])
+                render json: { error: 'You are not authorized to modify this data'} , status: 401 unless current_user && @blogger.user_id == current_user.id
             end
         end
 end

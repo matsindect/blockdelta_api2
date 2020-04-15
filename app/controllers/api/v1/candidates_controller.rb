@@ -16,11 +16,17 @@ module Api::V1
              # Method to create a new @blog using the safe params we setup.
             def create
                 @candidate = Candidate.new(candidate_params)
-                if @candidate.save
-                    response = { message: 'candidate created successfully'}
+                candidate_present = Candidate.exists?(user_id: current_user.id)
+                if candidate_present
+                    response = { message: 'User already has a profile'}
                     render json: response, status: :created 
                 else
-                    render json: @candidate.errors, status: :bad
+                    if @candidate.save
+                        response = { message: 'candidate created successfully'}
+                        render json: response, status: :created 
+                    else
+                        render json: @candidate.errors, status: :bad
+                    end
                 end
             end
             # Method to edit a specific @blog. @blog will need to be authorized.
@@ -66,7 +72,7 @@ module Api::V1
             # Adding a method to check if current_user can update itself. 
             # This uses our blogger method.
             def find_candidate
-                @blogger = Blogger.find(params[:id])
+                @candidate = Candidate.find(params[:id])
             end 
 
             def authorize

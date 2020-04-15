@@ -15,11 +15,17 @@ module Api::V1
              # Method to create a new @blog using the safe params we setup.
             def create
                 @blogger = Blogger.new(blogger_params)
-                if @blogger.save
-                    response = { message: 'blog created successfully'}
+                blogger_present = Blogger.exists?(user_id: current_user.id)
+                if blogger_present
+                    response = { message: 'Profile already exists'}
                     render json: response, status: :created 
                 else
-                    render json: @blogger.errors, status: :bad
+                    if @blogger.save
+                        response = { message: 'blog created successfully'}
+                        render json: response, status: :created 
+                    else
+                        render json: @blogger.errors, status: :bad
+                    end
                 end
             end
             # Method to edit a specific @blog. @blog will need to be authorized.

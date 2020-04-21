@@ -24,11 +24,24 @@ module Api::V1
              # Method to create a new @blog using the safe params we setup.
             def create
                 @blog = Blog.create(blog_params)
-                if @blog.save
-                    response = { message: 'blog created successfully'}
-                    render json: response, status: :created 
+                if params[:published]
+                    if current_user && current_user.is_admin?
+                        if @blog.save
+                            response = { message: 'blog created successfully'}
+                            render json: response, status: :created 
+                        else
+                            render json: @blog.errors, status: :bad
+                        end
+                    else
+                        render json: { error: 'You are not authorized to modify this data'} , status: 401
+                    end
                 else
-                    render json: @blog.errors, status: :bad
+                    if @blog.save
+                        response = { message: 'blog created successfully'}
+                        render json: response, status: :created 
+                    else
+                        render json: @blog.errors, status: :bad
+                    end
                 end
             end
             # Method to edit a specific @blog. @blog will need to be authorized.
@@ -39,8 +52,18 @@ module Api::V1
             # Method to update a specific @blog. @blog will need to be authorized.
             def update
                 @blog = Blog.find(params[:id])
-                if @blog.update(blog_params)
-                render json: { status: 200, msg: 'blog details have been updated.' }
+                if params[:published]
+                    if current_user && current_user.is_admin?
+                        if @blog.update(blog_params)
+                            render json: { status: 200, msg: 'blog details have been updated.' }
+                        end
+                    else
+                        render json: { error: 'You are not authorized to modify this data'} , status: 401
+                    end
+                else
+                    if @blog.update(blog_params)
+                        render json: { status: 200, msg: 'blog details have been updated.' }
+                    end
                 end
             end
 
@@ -70,8 +93,11 @@ module Api::V1
                 params.permit(:file => [])
             end
             def blog_params
-                params.permit(:title, :description, :slug, :sector_id, :category_id, :featured_image).merge(user_id: current_user.id)
+                params.permit(:title, :description, :slug, :sector_id, :category_id, :featured_image, :published).merge(user_id: current_user.id)
             end
+            # def publish
+            #     render json: { error: 'You are not authorized to modify this data'} , status: 401 unless current_user && current_user.is_admin?(params[:id])
+            # end
             # Adding a method to check if current_user can update itself. 
             # This uses our blogger method.
             def authorize

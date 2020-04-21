@@ -20,18 +20,7 @@ class Blog < ApplicationRecord
                     :url => '/:class/:id/:basename.:extension'
     validates_attachment :featured_image, presence: true
     do_not_validate_attachment_file_type :featured_image
-    # before_update :set_slug
-    # before_create :set_slug
-    # This method gives us a simple call to check if a user has permission to modify.
-    
-
-    # def save_attachments(params)
-    #     params[:file].each do |image|
-    #       self.documents.create(:file => image)
-    #     end
-    # end
-
-    
+   
     def set_published_at 
     self.published_at = DateTime.now if self.published
     end

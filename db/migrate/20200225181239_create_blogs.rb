@@ -4,7 +4,7 @@ class CreateBlogs < ActiveRecord::Migration[6.0]
       t.string :title
       t.text :description
       t.string :slug
-      t.boolean :published, null: false, default: 'user'
+      t.boolean :published, null: false, default: false
       t.belongs_to :user
       t.belongs_to :sector
       t.belongs_to :category

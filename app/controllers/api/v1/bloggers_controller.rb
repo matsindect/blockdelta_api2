@@ -17,7 +17,7 @@ module Api::V1
                 @blogger = Blogger.new(blogger_params)
                 blogger_present = Blogger.exists?(user_id: current_user.id)
                 if blogger_present
-                    response = { message: 'Profile already exists'}
+                    response = { message: 'User already has a profile'}
                     render json: response, status: :created 
                 else
                     if @blogger.save

@@ -15,10 +15,11 @@ class Candidate < ApplicationRecord
                       :url => '/:class/:id/:attachment/:basename.:extension'
     validates_attachment :cover_letter, presence: true
     do_not_validate_attachment_file_type :cover_letter
-    has_attached_file :resume,
+    has_attached_file :resume, 
                       :path => 
                       ':rails_root/non-public/system/:class/:id/:attachment/:basename.:extension',
                       :url => '/:class/:id/:attachment/:basename.:extension'
     validates_attachment :resume, presence: true
     do_not_validate_attachment_file_type :resume
+    
 end

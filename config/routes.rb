@@ -81,6 +81,7 @@ Rails.application.routes.draw do
         get    '/jobs/media'     => 'jobsmedia#media'
         post    '/jobs/media/post'  => 'jobsmedia#create'
         
+        
       #Error route
           get '/404', to: 'errors#not_found'
           get '/500', to: 'errors#internal_server_error'
@@ -102,7 +103,7 @@ Rails.application.routes.draw do
         end
         resources :candidates do
           member do
-            get '/resumes/:resume', :controller => "candidates", :action => "resume"
+            get '/resumes/:resume', to: "candidates#resume", as: 'candidate'
           end
         end
         resources :candidates do

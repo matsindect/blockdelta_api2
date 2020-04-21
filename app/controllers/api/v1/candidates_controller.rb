@@ -1,6 +1,7 @@
 module Api::V1
         class CandidatesController < ApplicationController
-            before_action :authenticate_user,  only: [ :index, :update, :current, :profile_pic, :resume, :cover_letter]
+            skip_before_action :authenticate_request, only: [:resume]
+            before_action :authenticate_user,  only: [ :index, :update, :current, :profile_pic, :cover_letter]
             before_action :authorize_as_candidate, only: [:create,:destroy, :current]
             before_action :find_candidate, only: [:update, :destroy, :current, :authorize]
             before_action :authorize,          only: [ :update, :current, :destroy]
@@ -58,16 +59,27 @@ module Api::V1
                         :type => "application/octet-stream", 
                         :disposition => inline
             end
-            def resume
-                @candidate = Candidate.find(params[:id])
-                send_file @candidate.resume.path, :type => @candidate.resume_content_type
-            end
+            # def resume
+            #     @candidate = Candidate.find(params[:id])
+            #     respond_to do |format|
+            #         format.html
+            #         format.pdf do
+            #           pdf = CombinePDF.new
+            #           pdf2 = render_to_string pdf: @candidate.resume, template: "costprojects/viewproject", encoding: "UTF-8"
+            #           pdf << CombinePDF.new(pdf2)
+            #           @candidate.resumes.each do |attachment|
+            #             pdf << CombinePDF.new(attachment.resume.path)
+            #           end
+            #           send_data pdf.to_pdf, :disposition => 'inline', :type => "application/pdf"
+            #         end
+            #       end
+            # end
             
             private
         
             # Setting up strict parameters for when we add account creation.
             def candidate_params
-                params.permit(:first_name, :surname, :profile_pic, :phone, :resume, :cover_letter).merge(user_id: current_user.id)
+                params.permit(:first_name, :surname, :profile_pic, :phone, :cover_letter, :resume).merge(user_id: current_user.id)
             end
             # Adding a method to check if current_user can update itself. 
             # This uses our blogger method.

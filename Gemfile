@@ -47,3 +47,5 @@ gem 'jwt'
 gem 'simple_command'
 gem 'knock'
 gem "paperclip", "~> 5.0.0.beta1"
+gem 'wicked_pdf'
+gem 'combine_pdf'

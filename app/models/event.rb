@@ -26,7 +26,10 @@ class Event < ApplicationRecord
         role == 'blogger'
     end
     def set_slug
-        self.slug = event_title.to_s.parameterize
+        Event.last ? next_id = (Event.last.id + 1).to_s : next_id = "1" # takes the next number in the sequence
+        if slug.blank?
+        self.slug = next_id + "-" + title.downcase.strip.gsub(/\s+/, "-")
+        end
     end 
 
 end

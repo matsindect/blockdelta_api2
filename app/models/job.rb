@@ -22,6 +22,9 @@ class Job < ApplicationRecord
     end
 
     def set_slug
-        self.slug = job_title.to_s.parameterize
+        Job.last ? next_id = (Job.last.id + 1).to_s : next_id = "1" # takes the next number in the sequence
+        if slug.blank?
+        self.slug = next_id + "-" + title.downcase.strip.gsub(/\s+/, "-")
+        end
     end 
 end

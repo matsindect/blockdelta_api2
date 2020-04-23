@@ -1,6 +1,5 @@
 class Job < ApplicationRecord
     include Filterable
-    scope :filter_by_category_id, -> (category_id) { where category_id: category_id }
     scope :filter_by_sector_id, -> (sector_id) { where sector_id: sector_id }
     scope :filter_by_job_title, -> (job_title) { where("job_title like ?", "#{job_title}%")}
     after_validation :set_slug, only: [:create, :update]

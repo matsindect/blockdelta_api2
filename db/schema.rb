@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_21_075825) do
+ActiveRecord::Schema.define(version: 2020_04_22_140414) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -47,7 +47,6 @@ ActiveRecord::Schema.define(version: 2020_04_21_075825) do
     t.string "slug"
     t.bigint "user_id"
     t.bigint "sector_id"
-    t.bigint "category_id"
     t.datetime "published_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -56,7 +55,6 @@ ActiveRecord::Schema.define(version: 2020_04_21_075825) do
     t.integer "featured_image_file_size"
     t.datetime "featured_image_updated_at"
     t.boolean "published", default: false, null: false
-    t.index ["category_id"], name: "index_blogs_on_category_id"
     t.index ["sector_id"], name: "index_blogs_on_sector_id"
     t.index ["user_id"], name: "index_blogs_on_user_id"
   end
@@ -116,7 +114,6 @@ ActiveRecord::Schema.define(version: 2020_04_21_075825) do
     t.text "event_description"
     t.string "event_venue"
     t.string "website"
-    t.bigint "category_id"
     t.bigint "sector_id"
     t.bigint "user_id"
     t.datetime "published_at"
@@ -127,7 +124,6 @@ ActiveRecord::Schema.define(version: 2020_04_21_075825) do
     t.integer "featured_image_file_size"
     t.datetime "featured_image_updated_at"
     t.string "slug"
-    t.index ["category_id"], name: "index_events_on_category_id"
     t.index ["sector_id"], name: "index_events_on_sector_id"
     t.index ["user_id"], name: "index_events_on_user_id"
   end
@@ -165,12 +161,10 @@ ActiveRecord::Schema.define(version: 2020_04_21_075825) do
     t.string "job_salary"
     t.string "job_description"
     t.bigint "sector_id"
-    t.bigint "category_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "user_id", null: false
     t.string "slug"
-    t.index ["category_id"], name: "index_jobs_on_category_id"
     t.index ["sector_id"], name: "index_jobs_on_sector_id"
     t.index ["user_id"], name: "index_jobs_on_user_id"
   end

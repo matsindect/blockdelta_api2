@@ -1,7 +1,6 @@
 class Blog < ApplicationRecord
     include Filterable
     scope :filter_by_user_id, -> (user_id) { where user_id: user_id }
-    scope :filter_by_category_id, -> (category_id) { where category_id: category_id }
     scope :filter_by_sector_id, -> (sector_id) { where sector_id: sector_id }
     scope :filter_by_title, -> (title) { where("title like ?", "#{title}%")}
     after_update :set_published_at
@@ -26,6 +25,9 @@ class Blog < ApplicationRecord
     end
 
     def set_slug
-        self.slug = title.to_s.parameterize
+        Blog.last ? next_id = (Blog.last.id + 1).to_s : next_id = "1" # takes the next number in the sequence
+        if slug.blank?
+        self.slug = next_id + "-" + title.downcase.strip.gsub(/\s+/, "-")
+        end
     end 
 end

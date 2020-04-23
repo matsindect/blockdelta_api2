@@ -93,7 +93,7 @@ module Api::V1
                 params.permit(:file => [])
             end
             def blog_params
-                params.permit(:title, :description, :slug, :sector_id, :category_id, :featured_image, :published).merge(user_id: current_user.id)
+                params.permit(:title, :description, :slug, :sector_id, :featured_image, :published).merge(user_id: current_user.id)
             end
             # def publish
             #     render json: { error: 'You are not authorized to modify this data'} , status: 401 unless current_user && current_user.is_admin?(params[:id])

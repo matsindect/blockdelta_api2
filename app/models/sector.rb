@@ -1,7 +1,7 @@
   class Sector < ApplicationRecord
       include Filterable
       scope :filter_by_sector_id, -> (sector_id) { where sector_id: sector_id }
-      after_validation :set_slug, only: [:create, :update]
+      before_save :set_slug
       has_many :blogs
       has_many :events
       # before_update :set_slug
@@ -11,6 +11,6 @@
         role == 'admin'
       end
       def set_slug
-        self.slug = name.to_s.parameterize
-      end 
+        self.slug = "#{id}-#{name.to_s.parameterize}"
+    end 
   end

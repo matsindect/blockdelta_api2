@@ -3,7 +3,7 @@ class Event < ApplicationRecord
     scope :filter_by_event_title, -> (event_title) { where("event_title like ?", "#{event_title}%")}
     # scope :filter_by_event_start_date, -> (event_start_date) { where("event_start_date >= ?", "#{event_start_date}%") }
     # scope :filter_by_event_end_date, -> (event_end_date) { where("event_end_date <= ?", "#{event_end_date}%") }
-    after_validation :set_slug, only: [:create, :update]
+    before_save :set_slug
     belongs_to :user
     has_many :eventsmedia
     attr_accessor :file
@@ -26,10 +26,6 @@ class Event < ApplicationRecord
         role == 'blogger'
     end
     def set_slug
-        Event.last ? next_id = (Event.last.id + 1).to_s : next_id = "1" # takes the next number in the sequence
-        if slug.blank?
-        self.slug = next_id + "-" + title.downcase.strip.gsub(/\s+/, "-")
-        end
+        self.slug = "#{id}-#{event_title.to_s.parameterize}"
     end 
-
 end

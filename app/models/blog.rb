@@ -3,13 +3,10 @@ class Blog < ApplicationRecord
     scope :filter_by_user_id, -> (user_id) { where user_id: user_id }
     scope :filter_by_sector_id, -> (sector_id) { where sector_id: sector_id }
     scope :filter_by_title, -> (title) { where("title like ?", "#{title}%")}
-    after_update :set_published_at
-    after_validation :set_slug, :set_published_at, only: [:create, :update]
+    before_save :set_slug
+    after_validation :set_published_at, only: [:create, :update]
     belongs_to :user
     belongs_to :sector
-    belongs_to :category
-    # has_many :documents
-    # # attr_accessor :file
     
     has_many :media, dependent: :destroy
     has_attached_file :featured_image,
@@ -25,9 +22,8 @@ class Blog < ApplicationRecord
     end
 
     def set_slug
-        Blog.last ? next_id = (Blog.last.id + 1).to_s : next_id = "1" # takes the next number in the sequence
-        if slug.blank?
-        self.slug = next_id + "-" + title.downcase.strip.gsub(/\s+/, "-")
-        end
+        self.slug = "#{id}-#{title.to_s.parameterize}"
     end 
+    
+    
 end

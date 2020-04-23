@@ -2,9 +2,8 @@ class Job < ApplicationRecord
     include Filterable
     scope :filter_by_sector_id, -> (sector_id) { where sector_id: sector_id }
     scope :filter_by_job_title, -> (job_title) { where("job_title like ?", "#{job_title}%")}
-    after_validation :set_slug, only: [:create, :update]
+    before_save :set_slug
     belongs_to :sector
-    belongs_to :category
     has_many :jobsmedia
     attr_accessor :file
     # has_many :media, dependent: :destroy
@@ -22,9 +21,6 @@ class Job < ApplicationRecord
     end
 
     def set_slug
-        Job.last ? next_id = (Job.last.id + 1).to_s : next_id = "1" # takes the next number in the sequence
-        if slug.blank?
-        self.slug = next_id + "-" + title.downcase.strip.gsub(/\s+/, "-")
-        end
+        self.slug = "#{id}-#{job_title.to_s.parameterize}"
     end 
 end

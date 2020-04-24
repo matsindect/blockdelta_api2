@@ -14,7 +14,7 @@ module Api::V1
           else
             if @users.save
               # Tell the UserMailer to send a welcome email after save
-              UserMailer.with(user: @user).welcome_email.deliver_now
+              UserMailer.welcome_email(@users).deliver_now
               response = { message: 'User created successfully'}
               render json: response, status: :created 
             else

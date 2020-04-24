@@ -21,11 +21,11 @@ class AuthenticateUser
     def user
       user = User.find_by_email(email)
       if user && user.authenticate(password)
-        if user.approved == true
+        # if user.approved == true
           return user 
-        else
-          errors.add :user_authentication, 'User not approved'
-        end
+        # else
+        #   errors.add :user_authentication, 'User not approved'
+        # end
       else
         errors.add :user_authentication, 'Invalid credentials'
         nil

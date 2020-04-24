@@ -10,6 +10,7 @@ class User < ApplicationRecord
     #encrypt password
     has_secure_password
 
+    after_validation :set_approved_at, only: [:create, :update]
     # This method gives us a simple call to check if a user has permission to modify.
     def can_modify_user?(user_id)
       role == 'admin' || id.to_s == user_id.to_s
@@ -55,6 +56,9 @@ class User < ApplicationRecord
       save!
     end
      
+    def set_approved_at 
+      self.approved_at = DateTime.now if self.approved
+      end
      private
      
     def generate_token

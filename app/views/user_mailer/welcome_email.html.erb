@@ -4,10 +4,14 @@
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
   </head>
   <body>
-    <h1>Welcome to blockdelta.com,</h1>
+    <h1>Welcome to blockdelta.com, <%= @user.username %></h1>
     <p>
-      You have successfully signed up to example.com,
-      your username is: <%= @user.username %>.<br>
+      You have successfully signed up to blockdelta.com,<br>
+      email: <%= @user.email %>.<br>
+      password: As you have provided
+    </p>
+    <p>
+      You signi credentials are bieng verified, you will recieve an email notifying you of your approval.
     </p>
     <p>
       To login to the site, just follow this link: <%= @url %>.

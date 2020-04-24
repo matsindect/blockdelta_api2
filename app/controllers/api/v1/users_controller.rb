@@ -8,16 +8,19 @@ module Api::V1
         
         # Method to create a new user using the safe params we setup.
         def create
-          
           @users = User.new(user_params)
+          if params[:approved]
+              render json: { error: 'You must be logged in as administrator to approve user'} , status: 401
+          else
             if @users.save
-                # Tell the UserMailer to send a welcome email after save
-                UserMailer.welcome_email(@users).deliver_now
-                response = { message: 'User created successfully'}
-                render json: response, status: :created 
+              # Tell the UserMailer to send a welcome email after save
+              UserMailer.with(user: @user).welcome_email.deliver_now
+              response = { message: 'User created successfully'}
+              render json: response, status: :created 
             else
                 raise ExceptionHandler::RecordNotUnique
             end
+          end
         end
 
         def user_blogs
@@ -38,8 +41,18 @@ module Api::V1
         # Method to update a specific user. User will need to be authorized.
       def update
         @users = User.find(params[:id])
-        if @users.update(user_params)
-          render json: { status: 200, msg: 'User details have been updated.' }
+        if params[:approved]
+          if current_user && current_user.is_admin?
+            if @users.update(user_params)
+              render json: { status: 200, msg: 'User details have been updated.' }
+            end
+          else
+            render json: { error: 'You are not authorized to modify this data'} , status: 401
+          end
+        else
+          if @users.update(user_params)
+            render json: { status: 200, msg: 'User details have been updated.' }
+          end
         end
       end
       
@@ -89,7 +102,7 @@ module Api::V1
       end
       # Setting up strict parameters for when we add account creation.
       def user_params
-        params.permit(:username, :email, :password, :password_confirmation, :role)
+        params.permit(:username, :email, :password, :password_confirmation, :role, :approved)
       end
       
       # Adding a method to check if current_user can update itself. 

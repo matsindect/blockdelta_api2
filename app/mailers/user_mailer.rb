@@ -1,9 +1,9 @@
 class UserMailer < ApplicationMailer
-    default from: 'notifications@example.com'
+    default from: 'no-reply@blockdelta.com'
  
   def welcome_email(user)
     @user = user
-    @url  = 'http://blockdelta.com/login'
+    @url  = 'http://blockdelta.com/auth/login'
     mail(to: @user.email, subject: 'Welcome to Blockdelta')
   end
   def forgot_password(user)

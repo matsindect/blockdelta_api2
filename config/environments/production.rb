@@ -57,7 +57,7 @@ Rails.application.configure do
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
-  # config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.raise_delivery_errors = true
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation cannot be found).
@@ -68,14 +68,25 @@ Rails.application.configure do
 
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
-
+  config.consider_all_requests_local       = true
+  config.action_mailer.perform_deliveries = true
   # Configure default URL for action mailer
   config.hosts << "blockdelta.com"
   config.hosts << "dev.blockdelta.com"
   config.hosts << "api.blockdelta.local"
   config.hosts << /application\.local\Z/
-  config.action_mailer.default_url_options = {:host =>'localhost:3000'}
+  config.action_mailer.default_url_options = {:host =>'https://blockdelta.com'}
 
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    port: 587,
+    address: 'mail.blockdelta.com',
+    domain: 'blockdelta.com',
+    user_name: 'no-reply@blockdelta.com',
+    password: 'EI~6QHThtysz',
+    authentication: :login,
+    enable_starttls_auto: true
+  }
   # Use a different logger for distributed setups.
   # require 'syslog/logger'
   # config.logger = ActiveSupport::TaggedLogging.new(Syslog::Logger.new 'app-name')

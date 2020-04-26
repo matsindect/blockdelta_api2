@@ -13,13 +13,13 @@ class Candidate < ApplicationRecord
                       :path => 
                       ':rails_root/non-public/system/:class/:id/:attachment/:basename.:extension',
                       :url => '/:class/:id/:attachment/:basename.:extension'
-    validates_attachment :cover_letter, presence: true
-    do_not_validate_attachment_file_type :cover_letter
+    validates_attachment :cover_letter, :content_type => { :content_type => %w(application/pdf application/msword application/vnd.openxmlformats-officedocument.wordprocessingml.document application/octet-stream) }
+    
     has_attached_file :resume, 
                       :path => 
                       ':rails_root/non-public/system/:class/:id/:attachment/:basename.:extension',
                       :url => '/:class/:id/:attachment/:basename.:extension'
-    validates_attachment :resume, presence: true
-    do_not_validate_attachment_file_type :resume
+    validates_attachment :resume, :content_type => { :content_type => %w(application/pdf application/msword application/vnd.openxmlformats-officedocument.wordprocessingml.document application/octet-stream) }
+    
     
 end

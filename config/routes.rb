@@ -49,7 +49,7 @@ Rails.application.routes.draw do
         get    '/candidate/:id'       => 'candidates#current'
         patch  '/candidate/:id'       => 'candidates#update'
         delete '/candidate/:id'       => 'candidates#destroy'
-          
+        
       #category resource
         get    '/sectors'          => 'sectors#index'
         post   '/sector/post'      => 'sectors#create'
@@ -99,19 +99,10 @@ Rails.application.routes.draw do
         resources :candidates do
           member do
             get '/profile_pics/:profile_pic', :controller => "candidates", :action => "profile_pic"
+            get '/cover_letters', :controller => "candidates", :action => "cover_letters"
+            get '/resumes', :controller => "candidates", :action => "resumes"
           end
         end
-        resources :candidates do
-          member do
-            get '/resumes/:resume', to: "candidates#resume", as: 'candidate'
-          end
-        end
-        resources :candidates do
-          member do
-              get '/cover_letters/:cover_letter', :controller => "candidates", :action => "cover_letter"
-          end
-        end
-        
         resources :blogs do
           member do
             get ':featured_image', :controller => "blogs", :action => "featured_image"

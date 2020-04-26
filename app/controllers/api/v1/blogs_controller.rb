@@ -13,11 +13,7 @@ module Api::V1
             rescue ActiveRecord::RecordNotFound
                 render json: {}, status: :not_found
             end
-            def media
-                @items = Document.filter(params.slice(:item_id))
-                render :json => @items.to_json(:methods => [:file])
-                # render json: @items
-            end
+            
             def blog_images
                 @blogs = Blog.where(:user_id => current_user.id)
             end
@@ -81,9 +77,7 @@ module Api::V1
                 send_file @blog.featured_image.path, :type => @blog.featured_image_content_type
             end
 
-            def find_categories(category_id)
-                @category = Category.find(category_id)
-              end
+           
             private
             # def filtering_params(params)
             #     params.slice(:sector_id, :category_id, :title)

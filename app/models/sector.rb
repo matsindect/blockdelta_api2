@@ -4,9 +4,7 @@
       before_save :set_slug
       has_many :blogs
       has_many :events
-      # before_update :set_slug
-      # before_create :set_slug
-      # This method tells us if the user is an admin or not.
+      
       def is_admin?
         role == 'admin'
       end

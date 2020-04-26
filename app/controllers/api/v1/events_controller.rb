@@ -13,11 +13,7 @@ module Api::V1
             rescue ActiveRecord::RecordNotFound
                 render json: {}, status: :not_found
             end
-            def media
-                @items = Eventsmedium.filter(params.slice(:event_id))
-                render :json => @items.to_json(:methods => [:file])
-                # render json: @items
-            end
+            
              # Method to create a new @blog using the safe params we setup.
             def create
                 @event = Event.create(event_params)

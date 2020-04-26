@@ -7,8 +7,6 @@ class Blog < ApplicationRecord
     after_validation :set_published_at, only: [:create, :update]
     belongs_to :user
     belongs_to :sector
-    
-    has_many :media, dependent: :destroy
     has_attached_file :featured_image,
                     :styles => { :thumb => "75x75>", :small => "150x150>" },
                     :path => 

@@ -12,11 +12,6 @@ module Api::V1
                 render json: @job
             end
 
-            def media
-                @items = Jobsmedium.filter(params.slice(:job_id))
-                render :json => @items.to_json(:methods => [:file])
-                # render json: @items
-            end
              # Method to create a new @blog using the safe params we setup.
             def create
                 @job = Job.new(category_params)

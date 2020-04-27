@@ -1,6 +1,7 @@
 module Api::V1
         class BloggersController < ApplicationController
-            before_action :authenticate_user,  only: [ :index, :update, :current, :profile_pic, :background_pic]
+            skip_before_action :authenticate_request, only: [:index, :current, :profile_pic, :background_pic ]
+            before_action :authenticate_user,  only: [ :update, :current]
             before_action :authorize_as_blogger, only: [:create,:destroy, :current]
             before_action :find_blogger, only: [:update, :destroy, :current, :authorize]
             before_action :authorize,          only: [ :update, :current, :destroy]

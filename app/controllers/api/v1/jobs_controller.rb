@@ -46,7 +46,7 @@ module Api::V1
         
             # Setting up strict parameters for when we add account creation.
             def category_params
-                params.permit(:job_title, :job_location, :job_deadline, :job_role, :job_salary, :job_description, :sector_id).merge(user_id: current_user.id)
+                params.permit(:job_title, :job_location, :job_deadline, :job_role, :job_salary, :job_description, :job_contact, :job_email, :sector_id).merge(user_id: current_user.id)
             end
             # Adding a method to check if current_user can update itself. 
             # This uses our blogger method.

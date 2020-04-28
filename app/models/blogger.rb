@@ -2,8 +2,7 @@ class Blogger < ApplicationRecord
     include Filterable
     scope :filter_by_user_id, -> (user_id) { where user_id: user_id }
     belongs_to :user
-    has_many :blogs, dependent: :destroy
-    has_many :events, dependent: :destroy
+    before_save :set_slug
     has_attached_file :profile_pic, 
                     :styles => { :thumb => "75x75>", :small => "150x150>" },
                     :path => 
@@ -22,7 +21,7 @@ class Blogger < ApplicationRecord
 
     
     def set_slug
-        self.slug = job_title.to_s.parameterize
+        self.slug = "#{first_name.to_s.parameterize}-#{surname.to_s.parameterize}-#{user_id.to_s}"
     end 
     def can_modify_blogger?(user_id)
         role == 'admin' || role == 'blogger' &&  id.to_s == user_id.to_s

@@ -1,9 +1,10 @@
 class Blog < ApplicationRecord
     include Filterable
+    scope :filter_by_approved, -> (approved) { where approved: approved }
     scope :filter_by_user_id, -> (user_id) { where user_id: user_id }
     scope :filter_by_sector_id, -> (sector_id) { where sector_id: sector_id }
     scope :filter_by_title, -> (title) { where("title like ?", "#{title}%")}
-    before_save :set_slug
+    before_save :set_slug, :set_author
     after_validation :set_published_at, only: [:create, :update]
     belongs_to :user
     belongs_to :sector
@@ -19,8 +20,14 @@ class Blog < ApplicationRecord
     self.published_at = DateTime.now if self.published
     end
 
+    def set_author
+        @blogger = Blogger.find_by(:user_id => self.user_id)
+        self.author_name = @blogger.first_name
+        self.author_surname = @blogger.surname
+    end
+
     def set_slug
-        self.slug = "#{id}-#{title.to_s.parameterize}"
+        self.slug = "#{id.to_s}-#{title.to_s.parameterize}"
     end 
     
     

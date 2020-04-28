@@ -8,12 +8,12 @@ module Api::V1
         
             # Should work if the current_user is authenticated.
             def index
-                @blogs = Blog.filter(params.slice(:sector_id, :category_id, :title, :user_id))
+                @blogs = Blog.filter(params.slice(:sector_id, :title, :user_id,:approved))
                 render :json => @blogs.to_json(:methods => [ :featured_image])
             rescue ActiveRecord::RecordNotFound
                 render json: {}, status: :not_found
             end
-            
+
             def blog_images
                 @blogs = Blog.where(:user_id => current_user.id)
             end
@@ -87,7 +87,7 @@ module Api::V1
                 params.permit(:file => [])
             end
             def blog_params
-                params.permit(:title, :description, :slug, :sector_id, :featured_image, :published).merge(user_id: current_user.id)
+                params.permit(:title, :description, :slug, :sector_id, :featured_image, :published, :author_name , :author_surname ).merge(user_id: current_user.id)
             end
             # def publish
             #     render json: { error: 'You are not authorized to modify this data'} , status: 401 unless current_user && current_user.is_admin?(params[:id])

@@ -10,6 +10,6 @@ class Job < ApplicationRecord
     end
 
     def set_slug
-        self.slug = "#{id}-#{job_title.to_s.parameterize}"
+        self.slug = "#{id.to_s}-#{job_title.to_s.parameterize}"
     end 
 end

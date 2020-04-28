@@ -18,6 +18,6 @@ class Event < ApplicationRecord
         role == 'blogger'
     end
     def set_slug
-        self.slug = "#{id}-#{event_title.to_s.parameterize}"
+        self.slug = "#{id.to_s}-#{event_title.to_s.parameterize}"
     end 
 end

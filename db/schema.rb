@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_24_062405) do
+ActiveRecord::Schema.define(version: 2020_04_28_053106) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -38,6 +38,7 @@ ActiveRecord::Schema.define(version: 2020_04_24_062405) do
     t.string "background_pic_content_type"
     t.integer "background_pic_file_size"
     t.datetime "background_pic_updated_at"
+    t.string "slug"
     t.index ["user_id"], name: "index_bloggers_on_user_id"
   end
 
@@ -55,6 +56,8 @@ ActiveRecord::Schema.define(version: 2020_04_24_062405) do
     t.integer "featured_image_file_size"
     t.datetime "featured_image_updated_at"
     t.boolean "published", default: false, null: false
+    t.text "author_name"
+    t.text "author_surname"
     t.index ["sector_id"], name: "index_blogs_on_sector_id"
     t.index ["user_id"], name: "index_blogs_on_user_id"
   end

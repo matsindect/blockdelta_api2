@@ -12,4 +12,8 @@ class Job < ApplicationRecord
     def set_slug
         self.slug = "#{id.to_s}-#{job_title.to_s.parameterize}"
     end 
+    # def set_author
+    #     @sector = Sector.find_by(:id => self.sector_id)
+    #     self.sector_name = @blogger.first_name
+    # end
 end

@@ -17,7 +17,7 @@ class User < ApplicationRecord
     end
 
     def can_modify_event?(user_id)
-      role == 'admin' |(| role == 'blogger' &&  id.to_s == user_id.to_s)
+      role == 'admin' || (role == 'blogger' &&  id.to_s == user_id.to_s)
     end
 
     def can_modify_candidate?(user_id)

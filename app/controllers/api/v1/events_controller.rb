@@ -60,7 +60,8 @@ module Api::V1
             # Adding a method to check if current_user can update itself. 
             # This uses our blogger method.
             def authorize
-                render json: { error: 'You are not authorized to modify this data'} , status: 401 unless current_user && current_user.can_modify_blog?(current_user.id)
+                @event = Event.find(params[:id])
+                render json: { error: 'You are not authorized to modify this data'} , status: 401 unless current_user &&  @event.user_id == current_user.id || (current_user && current_user.role == 'admin')
             end
         end
 end

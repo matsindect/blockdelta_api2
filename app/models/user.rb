@@ -27,6 +27,7 @@ class User < ApplicationRecord
     def is_admin?
       role == 'admin'
     end
+    
     def can_modify_blog?(user_id)
         role == 'admin' || (role == 'blogger' && id.to_s == user_id.to_s)
     end

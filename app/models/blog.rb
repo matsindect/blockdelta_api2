@@ -4,7 +4,7 @@ class Blog < ApplicationRecord
     scope :filter_by_user_id, -> (user_id) { where user_id: user_id }
     scope :filter_by_sector_id, -> (sector_id) { where sector_id: sector_id }
     scope :filter_by_title, -> (title) { where("title like ?", "#{title}%")}
-    before_save :set_slug, :set_author
+    before_save :set_slug, :set_author, only: [:create]
     after_validation :set_published_at, only: [:create, :update]
     belongs_to :user
     belongs_to :sector

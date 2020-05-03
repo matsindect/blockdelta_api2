@@ -50,7 +50,7 @@ module Api::V1
                 @blog = Blog.find(params[:id])
                 if params[:published]
                     if current_user && current_user.is_admin?
-                        if @blog.update(blog_params)
+                        if @blog.update(update_params)
                             render json: { status: 200, msg: 'blog details have been updated.' }
                         end
                     else

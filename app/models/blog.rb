@@ -1,6 +1,6 @@
 class Blog < ApplicationRecord
     include Filterable
-    scope :filter_by_approved, -> (approved) { where approved: approved }
+    scope :filter_by_published, -> (published) { where published: published }
     scope :filter_by_user_id, -> (user_id) { where user_id: user_id }
     scope :filter_by_sector_id, -> (sector_id) { where sector_id: sector_id }
     scope :filter_by_title, -> (title) { where("title like ?", "#{title}%")}

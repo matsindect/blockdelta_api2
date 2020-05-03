@@ -8,7 +8,7 @@ module Api::V1
         
             # Should work if the current_user is authenticated.
             def index
-                @blogs = Blog.filter(params.slice(:sector_id, :title, :user_id,:approved))
+                @blogs = Blog.filter(params.slice(:sector_id, :title, :user_id,:published)).order('published_at desc')
                 render :json => @blogs.to_json(:methods => [ :featured_image])
             rescue ActiveRecord::RecordNotFound
                 render json: {}, status: :not_found

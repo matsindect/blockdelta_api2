@@ -8,7 +8,7 @@ module Api::V1
         
             # Should work if the current_user is authenticated.
             def index
-                @job = Job.filter(params.slice(:sector_id, :category_id, :job_title))
+                @job = Job.filter(params.slice(:sector_id, :category_id, :job_title)).order('created_at desc')
                 render json: @job
             end
 

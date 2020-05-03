@@ -8,7 +8,7 @@ module Api::V1
         
             # Should work if the current_user is authenticated.
             def index
-                @event = Event.filter(params.slice(:event_title))
+                @event = Event.filter(params.slice(:event_title)).order('created_at desc')
                 render :json => @event.to_json(:methods => [ :featured_image])
             rescue ActiveRecord::RecordNotFound
                 render json: {}, status: :not_found

@@ -57,7 +57,7 @@ module Api::V1
                         render json: { error: 'You are not authorized to modify this data'} , status: 401
                     end
                 else
-                    if @blog.update(blog_params)
+                    if @blog.update(update_params)
                         render json: { status: 200, msg: 'blog details have been updated.' }
                     end
                 end
@@ -89,9 +89,9 @@ module Api::V1
             def blog_params
                 params.permit(:title, :description, :slug, :sector_id, :featured_image, :published, :author_name , :author_surname ).merge(user_id: current_user.id)
             end
-            # def publish
-            #     render json: { error: 'You are not authorized to modify this data'} , status: 401 unless current_user && current_user.is_admin?(params[:id])
-            # end
+            def update_params
+                params.permit(:title, :description, :slug, :sector_id, :featured_image, :published )
+            end
             # Adding a method to check if current_user can update itself. 
             # This uses our blogger method.
             def authorize

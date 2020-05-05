@@ -6,5 +6,6 @@ ActionMailer::Base.smtp_settings = {
   :user_name            => "no-reply@blockdelta.com",
   :password             => "EI~6QHThtysz",
   :authentication       => "login",
-  :enable_starttls_auto => true
+  :enable_starttls_auto => true,
+  :openssl_verify_mode  => 'none'
 }

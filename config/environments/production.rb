@@ -77,16 +77,7 @@ Rails.application.configure do
   config.hosts << /application\.local\Z/
   config.action_mailer.default_url_options = {:host =>'https://blockdelta.com'}
 
-  config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = {
-    port: 587,
-    address: 'mail.blockdelta.com',
-    domain: 'blockdelta.com',
-    user_name: 'no-reply@blockdelta.com',
-    password: 'EI~6QHThtysz',
-    authentication: :login,
-    enable_starttls_auto: true
-  }
+  
   # Use a different logger for distributed setups.
   # require 'syslog/logger'
   # config.logger = ActiveSupport::TaggedLogging.new(Syslog::Logger.new 'app-name')

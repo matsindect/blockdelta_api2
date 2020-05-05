@@ -44,6 +44,8 @@ module Api::V1
         if params[:approved]
           if current_user && current_user.is_admin?
             if @users.update(user_params)
+               # Tell the UserMailer to send a welcome email after approval
+               UserMailer.user_approved(@users).deliver_now
               render json: { status: 200, msg: 'User details have been updated.' }
             end
           else

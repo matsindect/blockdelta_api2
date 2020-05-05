@@ -1,7 +1,7 @@
 ActionMailer::Base.delivery_method = :smtp # be sure to choose SMTP delivery
 ActionMailer::Base.smtp_settings = {
   :address              => "mail.blockdelta.com",
-  :port                 => 465,
+  :port                 => 587,
   :domain               => "blockdelta.com",
   :user_name            => "no-reply@blockdelta.com",
   :password             => "EI~6QHThtysz",

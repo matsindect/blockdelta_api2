@@ -8,12 +8,17 @@ class UserMailer < ApplicationMailer
   end
   def forgot_password(user)
     @user = user
-    @url  = 'http://blockdelta.com/password-reset/'
+    @url  = 'http://blockdelta.com/auth/reset/'
     mail(to: @user.email, subject: 'Reset password instructions')
   end
   def user_approved (user)
     @user = user
     @url  = 'http://blockdelta.com/auth/login'
     mail(to: @user.email, subject: 'Blockdelta aproved')
+  end
+  def subscriber(name, email)
+    @name = name
+    @email = email
+    mail(to: 'matsindect@gmail.com', subject: 'Blockdelta aproved')
   end
 end

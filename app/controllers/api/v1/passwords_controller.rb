@@ -1,7 +1,7 @@
 module Api
     module V1
         class PasswordsController < ApplicationController
-            skip_before_action :authenticate_request, only: [:forgot, :reset]
+            skip_before_action :authenticate_request, only: [:forgot, :reset, :newsletter]
 
             def forgot
                 if params[:email].blank? # check if email is present
@@ -36,6 +36,15 @@ module Api
                     end
                 else
                     render json: {error:  ['Link not valid or expired. Try generating a new link.']}, status: :not_found
+                end
+            end
+
+            def newsletter
+                if params[:name] && params[:email]
+                    UserMailer.subscriber(params[:name],params[:email]).deliver_now
+                    render json: {status: 'ok'}, status: :ok
+                else
+                    render json: {error: user.errors.full_messages}, status: :unprocessable_entity
                 end
             end
         end

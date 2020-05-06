@@ -19,6 +19,7 @@ Rails.application.routes.draw do
 
         post 'password/forgot', to: 'passwords#forgot'
         post 'password/reset', to: 'passwords#reset'
+        post 'newsletter', to: 'passwords#newsletter'
 
       #blogs resource
         get    '/blogs'          => 'blogs#index'

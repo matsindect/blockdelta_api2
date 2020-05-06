@@ -14,11 +14,11 @@ class UserMailer < ApplicationMailer
   def user_approved (user)
     @user = user
     @url  = 'http://blockdelta.com/auth/login'
-    mail(to: @user.email, subject: 'Blockdelta aproved')
+    mail(to: @user.email, subject: 'Acount aproved')
   end
   def subscriber(name, email)
     @name = name
     @email = email
-    mail(to: 'info@blockdelta.com', subject: 'Blockdelta aproved')
+    mail(to: 'info@blockdelta.com', subject: 'Newsletter subscriber')
   end
 end

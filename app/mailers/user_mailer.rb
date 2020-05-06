@@ -19,6 +19,6 @@ class UserMailer < ApplicationMailer
   def subscriber(name, email)
     @name = name
     @email = email
-    mail(to: 'matsindect@gmail.com', subject: 'Blockdelta aproved')
+    mail(to: 'info@blockdelta.com', subject: 'Blockdelta aproved')
   end
 end

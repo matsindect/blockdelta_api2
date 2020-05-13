@@ -25,7 +25,9 @@ class Blog < ApplicationRecord
         @blogger = Blogger.find_by(:user_id => self.user_id)
         self.author_name = @blogger.first_name
         self.author_surname = @blogger.surname
+        self.author_slug = @blogger.slug
     end
+
 
     def set_slug
         self.slug = "#{id.to_s}-#{title.to_s.parameterize}"

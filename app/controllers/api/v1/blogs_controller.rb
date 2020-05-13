@@ -1,6 +1,6 @@
 module Api::V1
         class BlogsController < ApplicationController
-            skip_before_action :authenticate_request, only: [:index, :current, :featured_image ]
+            skip_before_action :authenticate_request, only: [:update_author_slug,:index, :current, :featured_image ]
             before_action :authenticate_user,  only: [ :update]
             before_action :authorize_as_blogger, only: [:create,:destroy]
             before_action :authorize,          only: [:update]
@@ -45,6 +45,13 @@ module Api::V1
                 @blog = Blog.find(params[:id])
                 render json: @blog
             end
+
+            def update_author_slug
+                @blogger = Blogger.find_by(:user_id => params[:id])
+                Blog.where(:user_id => @blogger.user_id).update_all(author_slug: @blogger.slug)
+                
+                render json: {success:"blogs updated"}
+            end 
             # Method to update a specific @blog. @blog will need to be authorized.
             def update
                 @blog = Blog.find(params[:id])
@@ -87,7 +94,7 @@ module Api::V1
                 params.permit(:file => [])
             end
             def blog_params
-                params.permit(:title, :description, :slug, :sector_id, :featured_image, :published, :author_name , :author_surname ).merge(user_id: current_user.id)
+                params.permit(:title, :description, :slug, :sector_id, :featured_image, :published, :author_name , :author_surname, :author_slug ).merge(user_id: current_user.id)
             end
             def update_params
                 params.permit(:title, :description, :slug, :sector_id, :featured_image, :published )

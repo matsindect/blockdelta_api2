@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_28_133450) do
+ActiveRecord::Schema.define(version: 2020_05_13_131509) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -58,6 +58,7 @@ ActiveRecord::Schema.define(version: 2020_04_28_133450) do
     t.boolean "published", default: false, null: false
     t.text "author_name"
     t.text "author_surname"
+    t.string "author_slug"
     t.index ["sector_id"], name: "index_blogs_on_sector_id"
     t.index ["user_id"], name: "index_blogs_on_user_id"
   end

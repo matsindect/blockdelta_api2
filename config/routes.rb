@@ -29,6 +29,7 @@ Rails.application.routes.draw do
         delete '/blog/:id'       => 'blogs#destroy'
         get    '/blogs/media'    => 'blogsmedia#media'
         post   '/blogs/media/post'  => 'blogsmedia#create'
+        post    '/blog/:id'          => 'blogs#update_author_slug'
 
       #category resource
         get    '/categories'         => 'categories#index'

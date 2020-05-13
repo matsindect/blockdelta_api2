@@ -3,7 +3,7 @@ class UserMailer < ApplicationMailer
  
   def welcome_email(user)
     @user = user
-    @url  = 'http://blockdelta.com/auth/login'
+    @url  = 'http://blockdelta.com/'
     mail(to: @user.email, subject: 'Welcome to Blockdelta')
   end
   def forgot_password(user)

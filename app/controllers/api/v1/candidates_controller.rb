@@ -78,7 +78,7 @@ module Api::V1
             end 
 
             def authorize
-                render json: { error: 'You are not authorized to modify this data'} , status: 401 unless current_user && @candidate.user_id == current_user.id
+                render json: { error: 'You are not authorized to modify this data'} , status: 401 unless (current_user && @candidate.user_id == current_user.id) || (current_user && current_user.role == 'admin') 
             end
         end
 end

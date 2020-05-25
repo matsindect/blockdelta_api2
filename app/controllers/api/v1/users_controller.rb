@@ -68,7 +68,7 @@ module Api::V1
 
       # Should work if the current_user is authenticated.
       def index
-        @users = User.all
+        @users = User..filter(params.slice(:role)).order("created_at DESC")
         render json: @users
       end
       

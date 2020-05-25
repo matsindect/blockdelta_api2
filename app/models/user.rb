@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+    include Filterable
+    scope :filter_by_role, -> (role) { where role: role }
     has_one :profile
     #Validations
     validates_presence_of :username, :email, :password_digest

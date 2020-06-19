@@ -55,7 +55,7 @@ module Api::V1
             # end
             # Setting up strict parameters for when we add account creation.
             def event_params
-                params.permit(:event_title, :event_start_date,:event_end_date, :event_venue, :event_description, :slug, :website, :featured_image, :sector_id).merge(user_id: current_user.id)
+                params.permit(:event_title, :event_start_date,:event_end_date, :event_venue, :event_description, :meta_decription, :image_alt, :meta_keywords :slug, :website, :featured_image, :sector_id).merge(user_id: current_user.id)
             end
             # Adding a method to check if current_user can update itself. 
             # This uses our blogger method.

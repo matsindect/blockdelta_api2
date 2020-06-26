@@ -97,7 +97,7 @@ module Api::V1
                 params.permit(:title, :description, :slug, :sector_id, :featured_image, :published, :meta_decription, :image_alt, :meta_keywords, :author_name , :author_surname, :author_slug ).merge(user_id: current_user.id)
             end
             def update_params
-                params.permit(:title, :description, :slug, :sector_id, :featured_image, :publishe, :meta_decription, :image_alt, :meta_keywords )
+                params.permit(:title, :description, :slug, :sector_id, :featured_image, :published, :meta_decription, :image_alt, :meta_keywords )
             end
             # Adding a method to check if current_user can update itself. 
             # This uses our blogger method.
